@@ -19,7 +19,7 @@ class SecuredController extends Controller
     public function basic_information_get() {
 
         $session_data = Session::all();
-        return view('pages.secured.dashboard.basic_information');
+        return view('pages.secured.dashboard.basic_information.basic_information');
     }
 
     public function basic_information_edit(Request $request) {

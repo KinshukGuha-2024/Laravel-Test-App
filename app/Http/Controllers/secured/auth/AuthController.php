@@ -27,7 +27,7 @@ class AuthController extends Controller
             return redirect()->back()->withErrors(['error' => 'Invalid Credentials']);
         }
     
-        $remember_me = $request->has('customCheck') ? true : false;
+        // $remember_me = $request->customCheck ? true : false;
     
         // Store session data
         session()->regenerate();
@@ -35,18 +35,19 @@ class AuthController extends Controller
         session(['user_id' => $user->user_id]);
         session(['email' => $user->email]);
         // Handle "Remember Me" functionality
-        if ($remember_me) {
+        if ($request->customCheck == 'on') {
             session(['remember_me' => 1]);
-            config(['session.lifetime' => 43200]); // Set session lifetime to 30 days
+            session()->forget('expiretime');
         } else {
             session(['remember_me' => 0]);
-            config(['session.lifetime' => 120]); // Set session lifetime to 2 hours
+            $expiryTime = time() + 3600;
+            session(['expiretime' => $expiryTime]);            
         }
     
         // Redirect to the dashboard
         return redirect()->route('secured.dashboard')->with([
             'status' => 'Login successful',
-            'user_name' => $user->user_name,
+            'user' => $user->user_name,
         ]);
     }
     

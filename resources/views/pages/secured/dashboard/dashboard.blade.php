@@ -43,10 +43,10 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                @if (session('status') && session('user_name'))
+                @if (session('status') && session('user'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }} 
-                        Welcome Back {{ session('user_name') }}.
+                        Welcome Back {{ session('user') }}.
                     </div>
                 @endif
 

@@ -47,9 +47,48 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Basic Information</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Create One</a>
+                        <a href="{{ route('secured.basic.info.save') }}" class="btn btn-primary "> Create One</a>
                        
                     </div>
+
+                    <div class="container-fluid" style="padding: 20px;">
+                        <div class="row" style="height:auto;">
+                            <!-- First Card -->
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                                <div class="card" style="width: auto;">
+                                    <img class="card-img-top" src="https://xsgames.co/randomusers/assets/avatars/male/74.jpg" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><b>Kinshuk Guha (Web Developer)</b></h5>
+                                        
+                                        <ul style="padding-left:20px">
+                                            <li style="color: green; "><strong>Active</strong></li>
+                                            <!-- <li style="color: #f74620; "><strong>Inactive</strong></li> -->
+                                        </ul>
+                                        <p>+123 456 7890 | kinshukguha@example.com </p>
+                                        <p>India | West Bengal | Kolkata - 700084</p>
+                                        <a href="{{ route('secured.basic.info.edit') }}" class="btn btn-success w-100"><b>Edit</b></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- <div style="display: flex; justify-content: center; align-items: center; height: 500px; background-color: #f8f9fa; text-align: center; padding: 20px; width:100%; ">
+                                <div>
+                                    <h1 style="color: #dc3545; font-family: 'Arial', sans-serif; font-weight: bold;">
+                                        No Data Available
+                                    </h1>
+                                    <p style="font-size: 1.2rem; color: #6c757d;">
+                                        You can create one from the button above.
+                                    </p>
+                                </div>
+                            </div> -->
+
+
+
+                            
+                        </div>
+                    </div>
+
+
 
                     
 

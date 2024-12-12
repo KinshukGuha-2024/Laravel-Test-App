@@ -2,7 +2,7 @@
 <footer class="sticky-footer bg-white">
     <div class="container my-auto">
         <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2021</span>
+        <span>Copyright &copy; {{ config('app.name') }} <span id="currentYear"></span></span>
         </div>
     </div>
 </footer>
@@ -33,4 +33,5 @@
         localStorage.removeItem('user_valid');
         window.location.href = "{{ route('auth.logout') }}";
     }
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
 </script>

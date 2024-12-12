@@ -17,7 +17,6 @@ class AuthMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
         if(!Session::has('user_id')) {
             return Redirect::route('auth.login')->with('relogin', 'Session expired. Please log in again to continue.');
         }

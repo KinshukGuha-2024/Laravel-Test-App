@@ -31,9 +31,13 @@ Route::group(["prefix" => "/secured"], function () {
     Route::group(["prefix" => "basic-information"], function() {
 
         Route::get('/', [SecuredController::class, 'basic_information_get'])->name('secured.basic.info.get');
-        Route::post('/', [SecuredController::class, 'basic_information_save'])->name('secured.basic.info.save');
-        Route::post('/edit/{id}', [SecuredController::class, 'basic_information_edit'])->name('secured.basic.info.edit');
+        Route::get('/save', function () {
+            return view('pages.secured.dashboard.basic_information.add_edit');
+        })->name('secured.basic.info.save');
+        Route::post('/', [SecuredController::class, 'basic_information_save'])->name('secured.basic.info.save.post');
+        Route::post('/edit', [SecuredController::class, 'basic_information_edit'])->name('secured.basic.info.edit');
         Route::post('/delete/{id}', [SecuredController::class, 'basic_information_delete'])->name('secured.basic.info.delete');
+
     })->middleware('AuthMiddleware');
 
     Route::group(["prefix" => "attachment"], function() {
@@ -42,6 +46,7 @@ Route::group(["prefix" => "/secured"], function () {
         Route::post('/', [SecuredController::class, 'attachment_save'])->name('secured.attachment.save');
         Route::post('/edit/{id}', [SecuredController::class, 'attachment_edit'])->name('secured.attachment.edit');
         Route::post('/delete/{id}', [SecuredController::class, 'attachment_delete'])->name('secured.attachment.delete');
+
     })->middleware('AuthMiddleware');
     
 
