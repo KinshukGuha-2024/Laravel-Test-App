@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class AuthController extends Controller
 {
     public function login_authorize(Request $request) {
@@ -25,13 +26,21 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request['password'], $user->password)) {
             return redirect()->back()->withErrors(['error' => 'Invalid Credentials']);
         }
-
+        $remember_me = $request['customCheck'] == '' ? 0 : 1;
+        Session::flush();
         Session::put('user_name', $user->user_name);
         Session::put('user_id', $user->user_id);
         Session::put('email', $user->email);
-        Session::put('remember_me', $request['customCheck']);
-
-        return redirect()->route('secured.dashboard');
+        Session::put('remember_me', $remember_me);
+        if (!$remember_me) {
+            $currentTime = time(); 
+            $expireTime = $currentTime + 60; 
+            Session::put('expiretime', $expireTime);
+        }
+        return redirect()->route('secured.dashboard')->with([
+            'status' => 'Login success,',
+            'user_name' => $user->user_name,
+        ]);
     }
 
     // public function save_admin() {

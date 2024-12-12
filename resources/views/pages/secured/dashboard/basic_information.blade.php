@@ -9,14 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ config('app.name') }} | Dashboard</title>
+    <title>{{ config('app.name') }} | Basic Information</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -24,9 +24,6 @@
 
 <body id="page-top">
 
-    <!-- @foreach ($session_data as $key => $value)
-        <p>{{ $key }}: {{ is_array($value) ? json_encode($value) : $value }}</p>
-    @endforeach -->
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -46,17 +43,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                @if (session('status') && session('user_name'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }} 
-                        Welcome Back {{ session('user_name') }}.
-                    </div>
-                @endif
-
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Basic Information</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fa-solid fa-circle-plus"></i> Create One</a>
                        
                     </div>
 
@@ -83,26 +74,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <script>
-        const sessionData = @json($session_data);
-        const userName = sessionData.user_name || '';
-        const userId = sessionData.user_id || '';
-        const email = sessionData.email || '';
-        const rememberMe = sessionData.remember_me;
-        const expiryTime = sessionData.expiretime || false;
-        const dataArr = [
-            userName,
-            userId,
-            email,
-            rememberMe,
-            expiryTime
-        ];
-        localStorage.setItem('user_valid', JSON.stringify(dataArr));
-        const storedArray = JSON.parse(localStorage.getItem('user_valid'));
-    </script>
-
-
     
 
 </body>
@@ -122,5 +93,7 @@
 <!-- Page level custom scripts -->
 <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
 </html>
