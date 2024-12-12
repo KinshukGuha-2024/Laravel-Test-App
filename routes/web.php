@@ -16,15 +16,17 @@ Route::group(["prefix" => "/secured"], function () {
             // LOGIN PAGE 
             Route::get('/', function () {
                 return view('pages.secured.auth.login');
-            })->name('auth.login');
+            })->name('auth.login')->middleware('LoginMiddleware');
 
             // LOGIN AUTHORIZE
             Route::post('/authorize', [AuthController::class, 'login_authorize'])->name('auth.login.authorize');
+            Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
         });
-    }); 
+    }) ;
 
     // DASHBOARD PAGE
-    Route::get('/dashboard', [SecuredController::class, 'dashboard'])->name('secured.dashboard');
+    Route::get('/dashboard', [SecuredController::class, 'dashboard'])->name('secured.dashboard')->middleware('AuthMiddleware');
 
     Route::group(["prefix" => "basic-information"], function() {
 
@@ -32,7 +34,7 @@ Route::group(["prefix" => "/secured"], function () {
         Route::post('/', [SecuredController::class, 'basic_information_save'])->name('secured.basic.info.save');
         Route::post('/edit/{id}', [SecuredController::class, 'basic_information_edit'])->name('secured.basic.info.edit');
         Route::post('/delete/{id}', [SecuredController::class, 'basic_information_delete'])->name('secured.basic.info.delete');
-    });
+    })->middleware('AuthMiddleware');
 
     Route::group(["prefix" => "attachment"], function() {
 
@@ -40,7 +42,7 @@ Route::group(["prefix" => "/secured"], function () {
         Route::post('/', [SecuredController::class, 'attachment_save'])->name('secured.attachment.save');
         Route::post('/edit/{id}', [SecuredController::class, 'attachment_edit'])->name('secured.attachment.edit');
         Route::post('/delete/{id}', [SecuredController::class, 'attachment_delete'])->name('secured.attachment.delete');
-    });
+    })->middleware('AuthMiddleware');
     
 
 

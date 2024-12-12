@@ -158,7 +158,7 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small data-toShow">{{ isset($session_data['user_name']) ? $session_data['user_name'] : ''  }}</span>
                 <img class="img-profile rounded-circle"
                     src="{{ asset('img/undraw_profile.svg') }}">
             </a>
@@ -188,4 +188,16 @@
     </ul>
 
 </nav>
+
+<script>
+    let value = localStorage.getItem('user_valid');
+
+    if(value) {
+        let parsedData = JSON.parse(value);
+        console.log(parsedData)
+
+        document.querySelector('.data-toShow').innerHTML = parsedData.user_name;
+    }
+
+</script>
 <!-- End of Topbar -->

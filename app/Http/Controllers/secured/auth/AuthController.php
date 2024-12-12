@@ -17,7 +17,7 @@ class AuthController extends Controller
             'user_id' => 'required|string',
             'password' => 'required|string',
         ]);
-    
+        
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -26,20 +26,35 @@ class AuthController extends Controller
         if (!$user || !Hash::check($request['password'], $user->password)) {
             return redirect()->back()->withErrors(['error' => 'Invalid Credentials']);
         }
-        $remember_me = $request['customCheck'] == '' ? 0 : 1;
-        Session::flush();
-        Session::put('user_name', $user->user_name);
-        Session::put('user_id', $user->user_id);
-        Session::put('email', $user->email);
-        Session::put('remember_me', $remember_me);
-        if (!$remember_me) {
-            $currentTime = time(); 
-            $expireTime = $currentTime + 60; 
-            Session::put('expiretime', $expireTime);
+    
+        $remember_me = $request->has('customCheck') ? true : false;
+    
+        // Store session data
+        session()->regenerate();
+        session(['user_name' => $user->user_name]);
+        session(['user_id' => $user->user_id]);
+        session(['email' => $user->email]);
+        // Handle "Remember Me" functionality
+        if ($remember_me) {
+            session(['remember_me' => 1]);
+            config(['session.lifetime' => 43200]); // Set session lifetime to 30 days
+        } else {
+            session(['remember_me' => 0]);
+            config(['session.lifetime' => 120]); // Set session lifetime to 2 hours
         }
+    
+        // Redirect to the dashboard
         return redirect()->route('secured.dashboard')->with([
-            'status' => 'Login success,',
+            'status' => 'Login successful',
             'user_name' => $user->user_name,
+        ]);
+    }
+    
+
+    public function logout() {
+        Session::flush();
+        return redirect()->route('auth.login')->with([
+            "status" => "You Have Logged Out Successfully"
         ]);
     }
 

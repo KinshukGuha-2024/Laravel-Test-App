@@ -24,9 +24,6 @@
 
 <body id="page-top">
 
-    <!-- @foreach ($session_data as $key => $value)
-        <p>{{ $key }}: {{ is_array($value) ? json_encode($value) : $value }}</p>
-    @endforeach -->
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -85,21 +82,23 @@
     </a>
 
     <script>
-        const sessionData = @json($session_data);
-        const userName = sessionData.user_name || '';
-        const userId = sessionData.user_id || '';
-        const email = sessionData.email || '';
-        const rememberMe = sessionData.remember_me;
-        const expiryTime = sessionData.expiretime || false;
-        const dataArr = [
-            userName,
-            userId,
-            email,
-            rememberMe,
-            expiryTime
-        ];
-        localStorage.setItem('user_valid', JSON.stringify(dataArr));
-        const storedArray = JSON.parse(localStorage.getItem('user_valid'));
+        if(!localStorage.getItem('user_valid')){
+            const sessionData = @json($session_data);
+            const userName = sessionData.user_name;
+            const userId = sessionData.user_id || '';
+            const email = sessionData.email || '';
+            const rememberMe = sessionData.remember_me;
+            const expiryTime = sessionData.expiretime || false;
+            const dataArr = {
+                user_name: userName,
+                user_id: userId,
+                email: email,
+                remember_me: rememberMe,
+                expiry_time: expiryTime
+            };
+            localStorage.setItem('user_valid', JSON.stringify(dataArr));
+            const storedArray = JSON.parse(localStorage.getItem('user_valid'));
+        }
     </script>
 
 
