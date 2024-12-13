@@ -20,7 +20,7 @@ class LoginMiddleware
     {
         if (Session::has('user_id')) {
             
-            if ($request->is('secured/auth/login')) {
+            if ($request->is('auth/login')) {
                 return Redirect::route('secured.dashboard');
             }
         }
