@@ -46,7 +46,7 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
     Route::group(["prefix" => "skill"], function() {
         Route::get('/', [SkillController::class, 'get_skill'])->name('secured.skill.get');
         Route::get('/save', function () {
-            return view('pages.secured.dashboard.basic_information.add');
+            return view('pages.secured.dashboard.skill.add');
         })->name('secured.skill.save');
         Route::post('/', [SkillController::class, 'save_skill'])->name('secured.skill.save.post');
         Route::get('/edit/{id}', [SkillController::class, 'update_get_skill'])->name('secured.skill.edit');

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ config('app.name') }} | Basic Information</title>
+    <title>{{ config('app.name') }} | Skill</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -61,7 +61,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Skills</h1>
-                        <a href="{{ route('secured.basic.info.save') }}" class="btn btn-primary d-flex align-items-center justify-content-center"> <i class="fa-solid fa-circle-plus"></i> &nbsp;Add Skill</a>
+                        <a href="{{ route('secured.skill.save') }}" class="btn btn-primary d-flex align-items-center justify-content-center"> <i class="fa-solid fa-circle-plus"></i> &nbsp;Add Skill</a>
                        
                     </div>
 

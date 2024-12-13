@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{{ config('app.name') }} | Basic Information</title>
+    <title>{{ config('app.name') }} | Add Skill</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -46,10 +46,9 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Save Basic Information</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Add Skill</h1>
                     </div>
 
                     <button class="back-btn" onclick="redirectBack();">
@@ -57,9 +56,9 @@
                         <span>Back</span>
                     </button>
                     <div class="container-fluid" style="padding: 20px;">
-                        <form id="form" class="form" method="POST" enctype="multipart/form-data" action="{{ route('secured.basic.info.save.post') }}">
+                        <form id="form" class="form" method="POST" enctype="multipart/form-data" action="{{ route('secured.skill.save.post') }}">
                             @csrf
-                            <p class="title">Add New User </p>
+                            <p class="title">Add New Skill </p>
                             <div style="display: flex; flex: 3; justify-content: space-between; gap: 20px;">
                                 <div style="flex: 1;">
                                     <label for="firstname" class="form-label">First Name <strong style="color: red;">*</strong></label>
@@ -275,7 +274,7 @@
 
 <script>
     function redirectBack() {
-        window.location.href="{{ route('secured.basic.info.get') }}";
+        window.location.href="{{ route('secured.skill.get') }}";
     }
 
     function imageShow() {
