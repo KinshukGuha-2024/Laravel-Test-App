@@ -3,35 +3,225 @@
 namespace App\Http\Controllers\secured;
 
 use App\Http\Controllers\Controller;
+use App\Models\BasicInformationModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+
 
 
 class SecuredController extends Controller
 {
     public function dashboard() {
         $session_data = Session::all();
-
         return view('pages.secured.dashboard.dashboard', compact('session_data'));
     }
 
-    // BASIC INFORMATION FUNCTIONS
+    // Home view for basic information 
     public function basic_information_get() {
-
-        $session_data = Session::all();
-        return view('pages.secured.dashboard.basic_information.basic_information');
+        $user_data = BasicInformationModel::orderBy('active')->get();
+        return view('pages.secured.dashboard.basic_information.basic_information', compact('user_data'));
     }
 
-    public function basic_information_edit(Request $request) {
+    // Insert User Data
+    public function basic_information_save(Request $request) {
+        $validated = $request->validate([
+            'first_name' => 'required|max:25',
+            'last_name' => 'required|max:25',
+            'active' => 'required|max:25',
+            'email' => 'required|email|unique:basic_info_user',
+            'mobile' => 'required|digits:10|unique:basic_info_user', 
+            'country' => 'required|max:30',
+            'state' => 'required|max:30',
+            'city' => 'required|max:30',
+            'pincode' => 'required|digits:6', 
+            'role' => 'required|max:20',
+            'linkedin' => '',
+            'facebook' => '',
+            'github' => '',
+            'profile_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
+        try {
+            $get_all = BasicInformationModel::where(['active' => 'Active'])->first();
+
+            if($get_all && $validated['active'] == 'active') {
+                return redirect()->route('secured.basic.info.get')->with(['error' => 'Only one person can be active at a time, please inactive others to continue']);
+            }
+
+            $uploadPath = public_path('storage/uploads'); 
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+            if ($request->hasFile('profile_image')) {
+                $imageName = time() . '.' . $request->file('profile_image')->extension();
+                $request->file('profile_image')->move($uploadPath, $imageName);
+                $fullImagePath = $imageName;
+            } 
+
+            
+
+            $info_model = new BasicInformationModel();
+            $info_model->fill([
+                'name' => trim($validated['first_name']) . ' ' . trim($validated['last_name']),
+                'first_name' => trim($validated['first_name']),
+                'last_name' => trim($validated['last_name']),
+                'active' => $validated['active'],
+                'email' => trim($validated['email']),
+                'mobile' => trim($validated['mobile']),
+                'country' => trim($validated['country']),
+                'state' => trim($validated['state']),
+                'city' => trim($validated['city']),
+                'pincode' => trim($validated['pincode']),
+                'role' => trim($validated['role']),
+                'linked_in_id' => !empty(trim($validated['linkedin'])) ? trim($validated['linkedin']) : null,
+                'facebook_id' => !empty(trim($validated['facebook'])) ? trim($validated['facebook']) : null,
+                'github_id' => !empty(trim($validated['github'])) ? trim($validated['github']) : null,
+                'image_path' => $fullImagePath, 
+            ]);
+            $info_model->save();
+            return redirect()->route('secured.basic.info.get')->with([
+                "status" => "User " . trim($validated['first_name']) . ' ' . trim($validated['last_name']) . " was added with status " . $validated['active'] . " !"
+            ]);
+        } catch (\Exception $e) {
+            echo json_encode($e->getMessage());
+            die;
+        }
     }
+
+    // Get User Data When Update
+    public function basic_information_update_get($id) {
+        $user_data = BasicInformationModel::where(["id" => $id])->first();
+        return view('pages.secured.dashboard.basic_information.edit', compact('user_data'));
+    }
+
+    // User Update
+    public function basic_information_update(Request $request) {
+
+        $is_exist = $this->checkEmailMobileExists($request->email, $request->mobile, $request->id);
+        
+        if($is_exist){
+            $validated = $request->validate([
+                'first_name' => 'required|max:25',
+                'last_name' => 'required|max:25',
+                'active' => 'required|max:25',
+                'email' => 'required|email|unique:basic_info_user',
+                'mobile' => 'required|digits:10|unique:basic_info_user', 
+                'country' => 'required|max:30',
+                'state' => 'required|max:30',
+                'city' => 'required|max:30',
+                'pincode' => 'required|digits:6', 
+                'role' => 'required|max:20',
+                'linkedin' => '',
+                'facebook' => '',
+                'github' => '',
+            ]);
     
-    public function basic_information_update($id) {
+        }
+        else{
+            $validated = $request->validate([
+                'first_name' => 'required|max:25',
+                'last_name' => 'required|max:25',
+                'active' => 'required|max:25',
+                'email' => 'required|email', 
+                'mobile' => 'required|digits:10', 
+                'country' => 'required|max:30',
+                'state' => 'required|max:30',
+                'city' => 'required|max:30',
+                'pincode' => 'required|digits:6',
+                'role' => 'required|max:20',
+                'linkedin' => '',
+                'facebook' => '',
+                'github' => '',
+            ]);
+        }
 
+        try {
+            $info_model = BasicInformationModel::find($request->id);
+            if (!$info_model) {
+                return redirect()->route('secured.basic.info.get')->with(['error' => 'User not found for update.']);
+            }
+             
+            $uploadPath = storage_path('app/public/uploads');  
+            if (!file_exists($uploadPath)) {
+                mkdir($uploadPath, 0755, true);
+            }
+    
+            // Handle Profile Image Upload
+            if ($request->hasFile('profile_image')) {
+                $existingImagePath = $request->input('existing_image_path');
+                if ($existingImagePath && file_exists($uploadPath . '/' . $existingImagePath)) {
+                    unlink($uploadPath . '/' . $existingImagePath);  
+                }
+                
+                $imageName = time() . '.' . $request->file('profile_image')->extension();
+                $request->file('profile_image')->move($uploadPath, $imageName);
+                $fullImagePath = $imageName; 
+            } else {
+                $fullImagePath = $request->input('existing_image_path'); 
+            } 
+
+            
+
+            DB::beginTransaction();
+            $info_model->update([
+                'name' => trim($validated['first_name']) . ' ' . trim($validated['last_name']),
+                'first_name' => trim($validated['first_name']),
+                'last_name' => trim($validated['last_name']),
+                'active' => $validated['active'],
+                'email' => trim($validated['email']),
+                'mobile' => trim($validated['mobile']),
+                'country' => trim($validated['country']),
+                'state' => trim($validated['state']),
+                'city' => trim($validated['city']),
+                'pincode' => trim($validated['pincode']),
+                'role' => trim($validated['role']),
+                'linked_in_id' => !empty(trim($validated['linkedin'])) ? trim($validated['linkedin']) : null,
+                'facebook_id' => !empty(trim($validated['facebook'])) ? trim($validated['facebook']) : null,
+                'github_id' => !empty(trim($validated['github'])) ? trim($validated['github']) : null,
+                'image_path' => $fullImagePath, 
+            ]);
+            if($info_model) {
+                DB::commit();
+                return redirect()->route('secured.basic.info.get')->with([
+                    "status" => "User " . trim($validated['first_name']) . ' ' . trim($validated['last_name']) . " was updated with status " . $validated['active'] . " !"
+                ]);
+            } else {
+                return redirect()->route('secured.basic.info.get')->with('error', 'An error occurred while updating '. trim($validated['first_name']) . ' ' . trim($validated['last_name']));
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            echo json_encode($e->getMessage());
+            die;
+        }
     }
 
+    // User Delete
     public function basic_information_delete($id) {
-
+        DB::beginTransaction();
+        try {
+            $user = BasicInformationModel::find($id);
+            if (!$user) {
+                return redirect()->route('secured.basic.info.get')->with('error','User not found.');
+            }
+    
+            $uploadPath = storage_path('app/public/uploads');
+            $imagePath = $uploadPath . '/' . $user->image_path;
+            if ($user->image_path && file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+            $delete_data = BasicInformationModel::where('id', $id)->delete();
+            if ($delete_data) {
+                DB::commit();
+                return redirect()->route('secured.basic.info.get')->with('status', 'User deleted successfully!');
+            } else {
+                return redirect()->route('secured.basic.info.get')->with('status', 'Record not found or already deleted.');
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('secured.basic.info.get')->with('error', 'An error occurred while deleting the user. ' . $e->getMessage());
+        }
     }
 
     // ATTACHMENT FUNCTIONS
@@ -48,6 +238,23 @@ class SecuredController extends Controller
     }
 
     public function attachment_delete($id) {
+
+    }
+
+    private function checkEmailMobileExists($email, $mobile, $id) {
+        $get_data = BasicInformationModel::where(function($query) use ($email, $mobile) {
+                        $query->where('mobile', $mobile)
+                            ->orWhere('email', $email);
+                    })
+                    ->where('id', '!=', $id)  
+                    ->first();
+
+        if($get_data) {
+            return true;
+        }
+        else{
+            return false;
+        }
 
     }
 }

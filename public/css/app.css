@@ -206,3 +206,15 @@
       opacity: 0;
     }
   }
+  @media (max-width: 484px) {
+    .image-container {
+      flex-direction: column;
+    }
+    .custum-file-upload {
+      width:auto;
+    }
+    /* .inserted-img{
+      height: auto;
+      width: auto;
+    } */
+  }

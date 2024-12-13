@@ -32,11 +32,14 @@ Route::group(["prefix" => "/secured"], function () {
 
         Route::get('/', [SecuredController::class, 'basic_information_get'])->name('secured.basic.info.get');
         Route::get('/save', function () {
-            return view('pages.secured.dashboard.basic_information.add_edit');
+            return view('pages.secured.dashboard.basic_information.add');
         })->name('secured.basic.info.save');
         Route::post('/', [SecuredController::class, 'basic_information_save'])->name('secured.basic.info.save.post');
-        Route::post('/edit', [SecuredController::class, 'basic_information_edit'])->name('secured.basic.info.edit');
-        Route::post('/delete/{id}', [SecuredController::class, 'basic_information_delete'])->name('secured.basic.info.delete');
+
+        Route::get('/edit/{id}', [SecuredController::class, 'basic_information_update_get'])->name('secured.basic.info.edit');
+        Route::post('/edit/post', [SecuredController::class, 'basic_information_update'])->name('secured.basic.info.edit.post');
+
+        Route::get('/delete/{id}', [SecuredController::class, 'basic_information_delete'])->name('secured.basic.info.delete');
 
     })->middleware('AuthMiddleware');
 
