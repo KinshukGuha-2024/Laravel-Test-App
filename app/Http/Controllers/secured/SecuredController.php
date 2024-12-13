@@ -101,41 +101,49 @@ class SecuredController extends Controller
 
         $is_exist = $this->checkEmailMobileExists($request->email, $request->mobile, $request->id);
         
-        if($is_exist){
-            $validated = $request->validate([
-                'first_name' => 'required|max:25',
-                'last_name' => 'required|max:25',
-                'active' => 'required|max:25',
+        $validation_rules = [
+            'first_name' => 'required|max:25',
+            'last_name' => 'required|max:25',
+            'active' => 'required|max:25',
+            'country' => 'required|max:30',
+            'state' => 'required|max:30',
+            'city' => 'required|max:30',
+            'pincode' => 'required|digits:6',
+            'role' => 'required|max:20',
+            'linkedin' => '',
+            'facebook' => '',
+            'github' => '',
+        ];
+
+
+        if($is_exist['mobile'] && $is_exist['email']){
+            $validation_rules = [
                 'email' => 'required|email|unique:basic_info_user',
                 'mobile' => 'required|digits:10|unique:basic_info_user', 
-                'country' => 'required|max:30',
-                'state' => 'required|max:30',
-                'city' => 'required|max:30',
-                'pincode' => 'required|digits:6', 
-                'role' => 'required|max:20',
-                'linkedin' => '',
-                'facebook' => '',
-                'github' => '',
-            ]);
+            ];
     
         }
-        else{
-            $validated = $request->validate([
-                'first_name' => 'required|max:25',
-                'last_name' => 'required|max:25',
-                'active' => 'required|max:25',
-                'email' => 'required|email', 
+        elseif($is_exist['email']){
+            $validation_rules = [
+                'email' => 'required|email|unique:basic_info_user',
                 'mobile' => 'required|digits:10', 
-                'country' => 'required|max:30',
-                'state' => 'required|max:30',
-                'city' => 'required|max:30',
-                'pincode' => 'required|digits:6',
-                'role' => 'required|max:20',
-                'linkedin' => '',
-                'facebook' => '',
-                'github' => '',
-            ]);
+            ];
         }
+        elseif($is_exist['mobile']){
+            $validation_rules = [
+                'mobile' => 'required|digits:10|unique:basic_info_user', 
+                'email' => 'required|email',
+
+            ];
+        } 
+        else {
+            $validation_rules = [
+                'mobile' => 'required|digits:10', 
+                'email' => 'required|email',
+            ];
+        }
+
+        $request->validate($validation_rules);
 
         try {
             $info_model = BasicInformationModel::find($request->id);
@@ -166,29 +174,29 @@ class SecuredController extends Controller
 
             DB::beginTransaction();
             $info_model->update([
-                'name' => trim($validated['first_name']) . ' ' . trim($validated['last_name']),
-                'first_name' => trim($validated['first_name']),
-                'last_name' => trim($validated['last_name']),
-                'active' => $validated['active'],
-                'email' => trim($validated['email']),
-                'mobile' => trim($validated['mobile']),
-                'country' => trim($validated['country']),
-                'state' => trim($validated['state']),
-                'city' => trim($validated['city']),
-                'pincode' => trim($validated['pincode']),
-                'role' => trim($validated['role']),
-                'linked_in_id' => !empty(trim($validated['linkedin'])) ? trim($validated['linkedin']) : null,
-                'facebook_id' => !empty(trim($validated['facebook'])) ? trim($validated['facebook']) : null,
-                'github_id' => !empty(trim($validated['github'])) ? trim($validated['github']) : null,
+                'name' => trim($request['first_name']) . ' ' . trim($request['last_name']),
+                'first_name' => trim($request['first_name']),
+                'last_name' => trim($request['last_name']),
+                'active' => $request['active'],
+                'email' => trim($request['email']),
+                'mobile' => trim($request['mobile']),
+                'country' => trim($request['country']),
+                'state' => trim($request['state']),
+                'city' => trim($request['city']),
+                'pincode' => trim($request['pincode']),
+                'role' => trim($request['role']),
+                'linked_in_id' => !empty(trim($request['linkedin'])) ? trim($request['linkedin']) : null,
+                'facebook_id' => !empty(trim($request['facebook'])) ? trim($request['facebook']) : null,
+                'github_id' => !empty(trim($request['github'])) ? trim($request['github']) : null,
                 'image_path' => $fullImagePath, 
             ]);
             if($info_model) {
                 DB::commit();
                 return redirect()->route('secured.basic.info.get')->with([
-                    "status" => "User " . trim($validated['first_name']) . ' ' . trim($validated['last_name']) . " was updated with status " . $validated['active'] . " !"
+                    "status" => "User " . trim($request['first_name']) . ' ' . trim($request['last_name']) . " was updated with status " . $request['active'] . " !"
                 ]);
             } else {
-                return redirect()->route('secured.basic.info.get')->with('error', 'An error occurred while updating '. trim($validated['first_name']) . ' ' . trim($validated['last_name']));
+                return redirect()->route('secured.basic.info.get')->with('error', 'An error occurred while updating '. trim($request['first_name']) . ' ' . trim($request['last_name']));
             }
         } catch (\Exception $e) {
             DB::rollBack();
@@ -248,13 +256,33 @@ class SecuredController extends Controller
                     })
                     ->where('id', '!=', $id)  
                     ->first();
+                    // echo json_encode($get_data);die;
+        if($get_data != null) {
+            if($get_data['email'] == $email && $get_data['mobile'] == $mobile) {
+                return [
+                    'email' => true,
+                    'mobile' => true  
+                ];
+            }
+            elseif($get_data['email'] == $email){
+                return [
+                    'email' => true,
+                    'mobile' => false  
+                ];
+            }
+            elseif($get_data['mobile'] == $mobile) {
+                return [
+                    'email' => false,
+                    'mobile' => true  
+                ];
+            }
+        }
 
-        if($get_data) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return [
+            'email' => false,
+            'mobile' => false  
+        ];
+
 
     }
 }
