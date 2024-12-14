@@ -21,3 +21,9 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+!/storage/.gitignore
+!/storage/images
+!/storage/images/assets
+!/storage/css
+!/storage/js
+!/storage/bootstrap
