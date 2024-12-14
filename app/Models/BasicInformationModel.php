@@ -24,6 +24,7 @@ class BasicInformationModel extends Model
         'city',
         'pincode',
         'role',
+        'about',
         'facebook_id',
         'github_id',
         'linked_in_id',

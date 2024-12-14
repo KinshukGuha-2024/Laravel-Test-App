@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kinshuk-Portfolio</title>
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3476/3476457.png" type="image/x-icon" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/10856/10856864.png" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@200&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -26,11 +26,11 @@
                 
                 <!-- User-Name Section Start -->
                 <h1 id="user-name">
-                    Kinshuk Guha
+                    {{ $basic_info['name'] }}
                 </h1>
-                <h1 id="user-role">Web Developer</h1>
+                <h1 id="user-role">{{ $basic_info['role'] }}</h1>
                 <div class="second-image-section">
-                    <img src="{{ asset('storage/images/assets/ProfileImage.jpg') }}" id="media-query-image">
+                    <img src="{{ asset('storage/uploads/' . $basic_info['image_path']) }}" id="media-query-image">
                 </div>
                 <!-- User-Name Section END -->
 
@@ -54,7 +54,7 @@
                     <hr>
                 </div>
                 <div class="about-body">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse deserunt, quidem labore eveniet, eaque omnis facilis minus ipsam officiis nulla similique velit autem qui facere! Pariatur amet facilis blanditiis sapiente, quis rerum nam inventore aspernatur expedita modi, assumenda quas facere. Facilis ut harum numquam quas quia soluta debitis ea nulla sapiente perspiciatis error esse voluptas magni perferendis, nobis consectetur sequi reiciendis exercitationem ex deleniti eaque rem. Accusamus consequatur, nulla eius placeat distinctio assumenda nisi! Animi, molestiae. Ab vel cum molestias, reprehenderit veniam pariatur porro quos corporis velit consectetur quibusdam iure aspernatur quidem nesciunt impedit nam corrupti, ut magnam architecto magni. Iusto, ipsam veniam. Illo, aliquam doloribus molestias laudantium asperiores quae. Facere alias nam, iure inventore sapiente, rerum error doloribus labore adipisci cumque delectus laudantium itaque animi excepturi, eum quidem? Ratione quisquam nobis nulla laudantium assumenda eaque, accusamus distinctio. Dignissimos corporis corrupti at. Iste mollitia maxime possimus id nemo, illum ea voluptate est quam et praesentium quasi ab ipsum rerum quis quidem provident dolore, excepturi neque nobis. Accusamus, praesentium mollitia eligendi error eius qui sed officia reiciendis aliquam inventore iste dicta numquam repellendus pariatur veritatis dignissimos at saepe similique temporibus deserunt dolor unde? Obcaecati, quam nostrum! Quaerat a corporis cupiditate culpa.</p>
+                    <p>{{ $basic_info['about'] }}</p>
                 </div>
             </div>
             <!-- About Section End -->
@@ -289,17 +289,17 @@
                 <div class="contact-me-body">
                     <div class="location-section">
                         <img src="{{ asset('storage/images/assets/icons/placeholder.png') }}" style="height:30px;width:30px;margin-right:5px;">
-                        <p>Kolkata, West Bengal, India</p>
+                        <p>{{ $basic_info['city'] }}, {{ $basic_info['state'] }}, {{ $basic_info['country'] }}</p>
                     </div>
 
                     <div class="mobile-section">
                         <img src="{{ asset('storage/images/assets/icons/old-typical-phone.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Phone : +91 9163104280</p>
+                        <p>Phone : +91 {{ $basic_info['mobile'] }}</p>
                     </div>
 
                     <div class="mail-section">
                         <img src="{{ asset('storage/images/assets/icons/gmail.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Email : kinshukguhadev.2024@gmail.com</p>
+                        <p>Email : {{ $basic_info['email'] }}</p>
                     </div>
 
                     <div class="image-section-contact-me">
@@ -328,11 +328,19 @@
             <div class="footer-section animation">
                 <div class="footer">
                     <div class="socialimages">
-                        <a href="https://www.facebook.com/profile.php?id=61556152710115"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
-                        <a href="https://github.com/KinshukGuhaDev"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
-                        <a href="https://www.linkedin.com/in/kinshuk-guha-5a8031262/"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
-                        <a href="https://x.com/KinshukGuha2024"><img src="{{ asset('storage/images/assets/icons/twitter.png') }}" style="width:25px;height:25px;margin:5px;"></a>
-                    </div>
+                        @if($basic_info['facebook_id'] != null)
+                            <a href="{{ $basic_info['facebook_id'] }}"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @endif
+
+                        @if($basic_info['github_id'] != null)
+                            <a href="{{ $basic_info['github_id'] }}"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @endif
+
+                        @if($basic_info['linked_in_id'] != null)
+                            <a href="{{ $basic_info['linked_in_id'] }}"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @endif
+                    
+                        </div>
                     <h3>Developed By : <a href="">Kinshuk Guha</a></h3>
                 </div>
             </div>

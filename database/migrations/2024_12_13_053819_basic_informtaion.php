@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('pincode');
             $table->string('role');
+            $table->longText('about');
             $table->string('facebook_id')->nullable();
             $table->string('github_id')->nullable();
             $table->string('linked_in_id')->nullable();

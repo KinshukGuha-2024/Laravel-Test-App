@@ -2,7 +2,12 @@
 /node_modules
 /public/build
 /public/hot
-# /public/storage
+
+# Ignore everything in /public/storage except specific directories
+/public/storage/*
+!/public/storage/bootstrap-images
+!/public/storage/images
+
 /storage/*.key
 /storage/pail
 /vendor
@@ -21,9 +26,3 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-!/storage/.gitignore
-!/storage/images
-!/storage/images/assets
-!/storage/css
-!/storage/js
-!/storage/bootstrap

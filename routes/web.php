@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\home\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Secured\Auth\AuthController;
 use App\Http\Controllers\secured\BasicInformationController;
@@ -7,12 +8,11 @@ use App\Http\Controllers\secured\SecuredController;
 use App\Http\Controllers\secured\SkillController;
 
 
+
 Route::redirect('/', '/home');
 
 Route::group(["prefix"=>"home"],function (){
-    Route::get('/', function () {
-        return view('pages.home.home');
-    });
+    Route::get('/', [HomeController::class, 'index']);
 });
 
 
