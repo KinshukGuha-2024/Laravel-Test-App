@@ -6,8 +6,13 @@ use App\Http\Controllers\secured\BasicInformationController;
 use App\Http\Controllers\secured\SecuredController;
 use App\Http\Controllers\secured\SkillController;
 
-Route::get('/', function () {
-    return redirect()->route('auth.login');
+
+Route::redirect('/', '/home');
+
+Route::group(["prefix"=>"home"],function (){
+    Route::get('/', function () {
+        return view('pages.home.home');
+    });
 });
 
 

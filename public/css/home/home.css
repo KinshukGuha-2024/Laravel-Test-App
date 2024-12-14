@@ -1,0 +1,792 @@
+
+html, body {
+    margin: 0;              /* Remove default margin */
+    padding: 0;             /* Remove default padding */
+    height: 100%;           /* Make body take up the full viewport height */
+    width: 100%;            /* Ensure body takes the full width of the viewport */
+    overflow: hidden;       /* Prevent scrolling */
+}
+
+
+#user-role{
+    font-size:32px;
+}
+
+
+body, h1, h2, h3, h4, h5, h6 {
+    font-family: "Afacad Flux", sans-serif;
+    
+}
+
+#user-name{
+    font-size:100px;
+    margin:0;
+    padding:0;
+}
+
+.head-Title h1,h2{
+    font-family: "Prompt", sans-serif;
+    font-style: normal;
+    font-weight: 200;
+    font-size:45px;
+    color:#757575!important; 
+    padding:0;
+    margin:0;   
+
+}
+
+.about-body p{
+    font-family: "Prompt", sans-serif;
+    font-style: normal;
+    font-weight: 200;
+    font-size:18px;
+    /* color:red; */
+
+}
+
+.Header{
+    width:100%;
+    height:100%;
+    min-height:800px;
+    /* background-color:red; */
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+.profile-image {
+    width: 36.5%;
+    overflow: hidden; /* Prevents overflow of content outside the div */
+}
+
+#ProfileImage-img {
+    width: 100%;       /* Ensures the image fits the div's width */
+    height: 100%;      /* Keeps the image's aspect ratio */
+    object-fit: cover; /* Ensures the image covers the entire width without stretching */
+}
+
+.main-body{
+    display:flex;
+    width:100%;
+    
+
+}
+
+.download-resume-section {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 15px;
+    width: 250px;
+    height: 50px; /* Adjusted height for better alignment */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    position: relative; /* Positioning to help align the button */
+    margin: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.download-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    margin-right: 10px; /* Space between image and button */
+}
+
+
+.download-resume-section:hover {
+    background-color: #E5EAF5;
+    
+}
+.download-resume-section:active {
+    background-color: #D1D8E3; /* Darker shade for click effect */
+    transform: translateY(2px); /* Optional: Slight downward movement */
+}
+
+
+
+#DownloadImage-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+button#download-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem; /* Adjust font size for the text */
+    font-weight: bold;
+    padding: 0;
+}
+
+button#download-button h1 {
+    margin: 0;
+    font-size: inherit;
+}
+
+
+.content-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Change to flex-start for proper alignment */
+    align-items: center;
+    height: 95vh; /* Set a fixed height to allow scrolling */
+    flex:2;
+    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
+    padding: 20px; /* Optional padding */
+}
+
+
+
+.about-body {
+    text-align: justify; /* Justifies the text */
+    margin: 10px; /* Optional: Add margin for spacing */
+    line-height: 1.5; /* Optional: Improves readability */
+}
+
+.skills-section{
+    margin-top:30px;
+    display:flex;
+    width:100%;
+    /* background-color:black; */
+    flex-direction:column;
+    justify-content:left;
+
+}
+.outer-bar{
+    width:95%;
+    background-color:#f1f1f1;
+    height:30px;
+    margin-left:15px;
+}
+.percentage-bar{
+    background-color:#616161;
+    
+    height:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.percentage-bar p{
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: 200;
+    font-size:22px;
+    color:white;
+    
+}
+
+.skill-name p{
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: 200;
+    font-size:35px;
+    padding:0px;
+    margin:15px;
+}
+
+.my-price-section{
+    width:100%;
+    height:100%;
+    margin-top:50px;
+    
+    
+    
+}
+
+.basic-price-section{
+    height:530px;
+    width:45%;
+    /* background-color:red; */
+    margin-top:30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+.ultimate-price-section{
+    height:530px;
+    width:45%;
+    /* background-color:red; */
+    margin-top:30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+
+.price-category-name-basic{
+    font-family: "Prompt", sans-serif;
+    font-weight: 200;
+    font-size:35px;
+    padding:0px;
+    background-color:#616161;
+    color:white;
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+
+.price-category-name-ultimate{
+    font-family: "Prompt", sans-serif;
+    font-weight: 200;
+    font-size:35px;
+    padding:0px;
+    background-color:black;
+    color:white;
+    height:100px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+}
+.features-section{
+    /* background-color:red; */
+    width:100%;
+    height:250px;
+}
+
+.feature-name{
+    font-family: "Prompt", sans-serif;
+    color:gray;
+    font-weight: 200;
+    width:100%;
+    height: 60px;
+    font-size:20px;
+    border-bottom:1px solid lightgray;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.pricing-section{
+    height:80px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding-top:5px;
+    padding-bottom:15px;
+    
+    
+    border-bottom:1px solid lightgray;
+
+
+}
+.price{
+    font-family: "Prompt", sans-serif;
+    color:gray;
+    font-weight: 200;
+    margin-bottom:-25px;
+  
+    
+}
+.signup-section{
+    background-color:#ddd;
+    height: 80px;
+    width:100%;
+   
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    
+
+}
+.signup-button-section {
+    height: 40px;
+    width: 120px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    background-color: white; /* Default background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* Smooth transition for background and color */
+}
+
+.signup-button-section a {
+    font-family: "Prompt", sans-serif;
+    font-weight: 200;
+    color: black;
+    font-size: 18px;
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s ease; /* Smooth transition for text color */
+}
+
+.signup-button-section:hover {
+    background-color: black; /* Change background color on hover */
+}
+
+.signup-button-section:hover a {
+    color: white; /* Change text color on hover */
+}
+
+.signup-button-section:active {
+    transform: scale(0.98); /* Slightly scale down to simulate a press */
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 6px; /* Reduce the shadow */
+    background-color: #333; /* Darken the background slightly */
+}
+.plans{
+    display:flex;
+    /* height:100%; */
+    /* align-items:space-between; */
+    justify-content:space-between;
+}
+
+
+.coming-soon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 430px; /* Adjust height as needed */
+    background-color: #f0f0f0; /* Light gray background */
+    font-family: "Prompt", sans-serif; /* Use a clean, modern font */
+    text-align: center;
+}
+
+.coming-soon p {
+    font-size: 32px; /* Large font size */
+    color: #333; /* Dark gray text */
+    font-weight: 600; /* Semi-bold for emphasis */
+    letter-spacing: 2px; /* Add spacing between letters */
+    text-transform: uppercase; /* Make text all caps */
+    background: linear-gradient(to right, #555, #888); /* Softer gradient */
+    -webkit-background-clip: text;
+    color: transparent; /* Use gradient as text color */
+    animation: fadeIn 2s ease-in-out; /* Keep the fade-in animation */
+    text-shadow: 0 0 5px rgba(150, 150, 150, 0.5), /* Subtle soft shadow */
+                0 0 10px rgba(150, 150, 150, 0.4); /* More diffused glow */
+}
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Glowing effect */
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 5px rgba(150, 150, 150, 0.5),  /* Softer initial glow */
+                    0 0 10px rgba(150, 150, 150, 0.4), /* More diffused glow */
+                    0 0 15px rgba(150, 150, 150, 0.3); /* Additional softer glow */
+    }
+    100% {
+        text-shadow: 0 0 15px rgba(150, 150, 150, 0.8), /* Softer final glow */
+                    0 0 30px rgba(150, 150, 150, 0.6), /* More diffused glow */
+                    0 0 45px rgba(150, 150, 150, 0.4); /* Additional softer glow */
+    }
+}
+
+
+.contact-me-section{
+    /* height:100%; */
+    width:100%;
+    padding: 40px 0px;
+}
+
+.contact-me-body{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    width:100%;
+}
+.location-section{
+    display:flex;
+    align-items:center;
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: bold;
+    color: gray;
+    font-size: 20px;
+    /* justify-content:center; */
+}
+.mobile-section{
+    display:flex;
+    align-items:center;
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: bold;
+    color: gray;
+    font-size: 20px;
+
+}
+.mail-section{
+    display:flex;
+    align-items:center;
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: bold;
+    color: gray;
+    font-size: 20px;
+
+}
+
+.contact-me-form{
+    display:flex;
+    flex-direction:column;
+    /* align-items:center; */
+    padding:20px;
+}
+
+
+.form-section input,textarea{
+    /* background-color:red; */
+    width:95%;
+    height:10px;
+    border:1px solid black;
+    margin-bottom:40px;
+    padding:15px;
+    font-family: "Afacad Flux", sans-serif;
+    font-weight: bold;
+    color: gray;
+    font-size: 20px;
+
+}
+
+#send-message-button{
+    height:60px;
+    width:200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family: "Afacad Flux", sans-serif;
+    color: black;
+    font-size: 18px;
+    font-weight:bold;
+    cursor:pointer;
+
+}
+
+.image-section-contact-me {
+    object-fit: contain; /* Keep aspect ratio and fit within the container */
+    height: auto; /* Set height */
+    width: 100%; /* Set width */
+}
+
+.footer-section{
+    height:100%;
+    padding-top:50px;
+    width:100%;
+    
+}
+.footer{
+    height:300px;
+    width:auto;
+    background-color:#f1f1f1;
+    padding:0px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:-25px;
+    flex-direction:column;
+}
+.footer i{
+    color:black;
+
+}
+
+.socialimages{
+    margin:15px;
+}
+
+.my-portfolio-section{
+    height:auto;
+    width:100%;
+
+}
+
+.portfolio-pictures {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap */
+    justify-content: center; /* Center items horizontally */
+    gap: 10px; /* Space between images */
+}
+
+.portfolio-pictures img {
+    max-width: calc(50% - 10px); /* Two images in a row with gap adjustment */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the container without distortion */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    border:0.5px #f1f1f1;
+}
+
+/* Optional: Adjust for smaller screens */
+@media (max-width: 600px) {
+    .portfolio-pictures img {
+        max-width: calc(100% - 10px); /* One image per row on small screens */
+    }
+}
+
+
+/* Define initial state and animation */
+.animation {
+    opacity: 0; /* Start with invisible */
+    transform: translateY(20px); /* Slightly move down */
+    transition: opacity 2s ease, transform 2s ease; /* Smooth transition */
+}
+
+.animation.visible {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Move back to original position */
+}
+
+.second-image-section{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    margin-bottom:15px;
+    display:none;
+}
+
+#media-query-image{
+    width: 100%;
+    height: 100%;
+    object-fit:contain;
+}
+
+.my-price-section{
+    height:auto;
+}
+
+@media (max-width: 1078px) {
+    /* Adjusts layout for large tablets */
+
+    .profile-image{
+        display:none;
+    }
+
+    .second-image-section{
+        display:block;
+    }
+
+    
+
+    
+}
+
+@media (max-width: 808px) {
+    .plans{
+        flex-direction:column;
+        /* height:auto; */
+        justify-content: none;
+    }
+    .basic-price-section{
+        width:100%;
+        
+    }
+    .ultimate-price-section{
+        width:100%;
+        
+
+    }
+    #user-name{
+        font-size:70px;
+    }
+    #user-role{
+        font-size:28px;
+    }
+    .download-resume-section{
+        height: 30px;
+    }
+    
+    /* .projects-worked-body {
+        width: 80%;
+    } */
+}
+
+@media (max-width: 415px) {
+    #user-name{
+        font-size:60px;
+    }
+}
+
+/* Modal background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal content container */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 80%;
+    max-height: 80%;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center the content */
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Close button styling */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    z-index: 1;
+    color:red;
+}
+
+/* Image styling inside modal */
+.modal-content img {
+    width: 90%;
+    
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease; /* Smooth transition for zoom */
+    position: relative; /* Ensure image can be positioned */
+    cursor: grab; /* Change cursor to indicate draggable */
+}
+
+/* Change cursor style when dragging */
+.modal-content img:active {
+    cursor: grabbing; /* Change to grabbing when the image is being dragged */
+}
+
+
+
+
+.projects-worked-section{
+    margin-top:30px;
+    display:flex;
+    width:100%;
+    /* background-color:black; */
+    flex-direction:column;
+    justify-content:left;
+
+}
+
+.projects-worked-body {
+    background-color: #ffffff; /* White background for a clean look */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Space inside the box */
+    font-family: 'Roboto', sans-serif; /* Consistent font style */
+    display: flex;
+    width:auto;
+    flex-direction:column;
+    justify-content:left;
+    list-style-type: none;
+}
+
+.projects-worked-body ul {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.projects-worked-body li {
+    background-color: #f0f0f0; /* Light grey background for list items */
+    border: 1px solid #dcdcdc; /* Subtle border for definition */
+    border-radius: 5px; /* Rounded corners for list items */
+    padding: 15px; /* Space inside list items */
+    margin: 10px 0; /* Space between list items */
+    transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition for hover effect */
+    font-size: 1.1rem; /* Slightly larger text */
+    font-weight: 500; /* Medium weight for emphasis */
+}
+
+.projects-worked-body li:hover {
+    background-color: #e1e1e1; /* Darker grey on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+.project-details {
+    display: none; /* Hide details by default */
+    margin-top: 10px; /* Space above details */
+    padding: 10px; /* Padding for details */
+    background-color: #f9f9f9; /* Light background for details */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #dcdcdc; /* Subtle border */
+}
+
+.project-item {
+    position: relative; /* Set the position for the arrow */
+}
+
+.project-item .fa-arrow-down {
+    transition: transform 0.3s ease; /* Smooth rotation effect */
+}   
+
+.project-item.expanded .fa-arrow-down {
+    transform: rotate(180deg); /* Rotate arrow when expanded */
+}
+.project-details.show {
+    display: block; /* Show when class is added */
+}
+
+.project-details {
+    display: none; /* Hide by default */
+}
+
+
+
+
+/* General visibility */
+
+
+/* Animations */
+@keyframes slide-left {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
+@keyframes slide-right {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+
+
+@keyframes zoom-in {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+}
+
+@keyframes rotate-in {
+    from { transform: rotate(-180deg); }
+    to { transform: rotate(0); }
+}
+
+/* Applying animations */
+.slide-left { animation: slide-left 0.8s forwards; }
+.slide-right { animation: slide-right 0.8s forwards; }
+
+.zoom-in { animation: zoom-in 0.8s forwards; }
+.rotate-in { animation: rotate-in 0.8s forwards; }
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+

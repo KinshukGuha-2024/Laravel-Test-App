@@ -29,6 +29,16 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        DB::table('users')->insert([
+            'user_name' => 'Kinshuk Guha',
+            'user_id' => 'kinshuk@admin123',
+            'password' => Hash::make('kinshuk@2002'), 
+            'email' => 'kinshukguhadev.2024@gmail.com',
+            'mobile_number' => '1234567890',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**
