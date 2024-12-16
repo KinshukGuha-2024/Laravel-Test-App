@@ -9,7 +9,7 @@ use App\Http\Controllers\secured\SkillController;
 
 
 
-Route::redirect('/', '/home');
+Route::redirect('/', '/secured/dashboard');
 
 Route::group(["prefix"=>"home"],function (){
     Route::get('/', [HomeController::class, 'index']);
@@ -50,9 +50,7 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
     // Skills Page
     Route::group(["prefix" => "skill"], function() {
         Route::get('/', [SkillController::class, 'get_skill'])->name('secured.skill.get');
-        Route::get('/save', function () {
-            return view('pages.secured.dashboard.skill.add');
-        })->name('secured.skill.save');
+        Route::get('/save', [SkillController::class, 'save_skill_get_data'])->name('secured.skill.save');
         Route::post('/', [SkillController::class, 'save_skill'])->name('secured.skill.save.post');
         Route::get('/edit/{id}', [SkillController::class, 'update_get_skill'])->name('secured.skill.edit');
         Route::post('/edit/post', [SkillController::class, 'update_skill'])->name('secured.skill.edit.post');

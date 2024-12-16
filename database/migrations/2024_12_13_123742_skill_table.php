@@ -21,6 +21,8 @@ return new class extends Migration
                   ->on('basic_info_user')
                   ->onDelete('cascade') 
                   ->onUpdate('cascade'); 
+            $table->timestamps();
+            
         });
     }
 

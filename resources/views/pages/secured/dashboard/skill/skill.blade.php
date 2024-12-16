@@ -68,12 +68,30 @@
 
                     <div class="container-fluid" style="padding: 20px;">
                         <div class="row" style="height:auto;">
+                            
+                                    
                             <!-- First Card -->
-                             @if(count($skill_data) > 0)
-                                @foreach($skill_data as $data)
-                                
-
-                                @endforeach
+                            @if(count($skill_data) > 0)
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">User</th>
+                                        <th scope="col">Total Skills</th>
+                                        <th scope="col">Operation</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($skill_data as $key => $data)
+                                        <tr>
+                                            <th scope="row">{{ $key+1 }}</th>
+                                            <td>{{ $data['name'] }}</td>
+                                            <td>{{ $data['skill_count'] }}</td>
+                                            <td>@mdo</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             @else
                                 <div style="display: flex; justify-content: center; align-items: center; height: 500px; background-color: #f8f9fa; text-align: center; padding: 20px; width:100%; ">
                                     <div>
