@@ -207,7 +207,7 @@ class BasicInformationController extends Controller
                 DB::commit();
                 return redirect()->route('secured.basic.info.get')->with('status', 'User deleted successfully!');
             } else {
-                return redirect()->route('secured.basic.info.get')->with('status', 'Record not found or already deleted.');
+                return redirect()->route('secured.basic.info.get')->with('error', 'Record not found or already deleted.');  
             }
         } catch (\Exception $e) {
             DB::rollBack();

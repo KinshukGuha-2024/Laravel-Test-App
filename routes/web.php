@@ -54,7 +54,7 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
         Route::post('/', [SkillController::class, 'save_skill'])->name('secured.skill.save.post');
         Route::get('/edit/{id}', [SkillController::class, 'update_get_skill'])->name('secured.skill.edit');
         Route::post('/edit/post', [SkillController::class, 'update_skill'])->name('secured.skill.edit.post');
-        Route::get('/delete/{id}', [SkillController::class, 'delete_skill'])->name('secured.skill.delete');
+        Route::get('/reset/{id}', [SkillController::class, 'reset_skill'])->name('secured.skill.reset');
     });
 
     // Attachments Page

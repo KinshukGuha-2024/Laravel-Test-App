@@ -87,7 +87,18 @@
                                             <th scope="row">{{ $key+1 }}</th>
                                             <td>{{ $data['name'] }}</td>
                                             <td>{{ $data['skill_count'] }}</td>
-                                            <td>@mdo</td>
+                                            <td>
+                                                <div >
+                                                    <a href="{{ route('secured.skill.edit', ['id' => $data['id']]) }}" style="margin-right:5px;" class="btn btn-success">
+                                                        <i class="fa-solid fa-pen-to-square"></i>
+                                                        Edit
+                                                    </a>
+                                                    <a href="{{ route('secured.skill.reset', ['id' => $data['id']]) }}" onclick="confirmDelete(event)" class="btn btn-danger">
+                                                        <i class="fa-solid fa-trash"></i>
+                                                        Reset Skills
+                                                    </a>   
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -157,12 +168,15 @@
 <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
 
 <script>
-    function confirmDelete() {
-        var cnf = confirm('Are you sure you want to delete this user?');
+    function confirmDelete(event) {
+        var cnf = confirm('Are you sure you want to Reset all skills for this user?');
 
-        if(!cnf) {
+        if (!cnf) {
+            event.preventDefault();  // Prevent the link from being followed
             return false;
         }
+
+        // If confirmed, the link will be followed, no need for additional code
     }
 </script>
 </html>
