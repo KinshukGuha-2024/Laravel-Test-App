@@ -6,6 +6,7 @@ use App\Http\Controllers\Secured\Auth\AuthController;
 use App\Http\Controllers\secured\BasicInformationController;
 use App\Http\Controllers\secured\SecuredController;
 use App\Http\Controllers\secured\SkillController;
+use App\Http\Controllers\secured\AttachmentController;
 
 
 
@@ -59,9 +60,11 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
 
     // Attachments Page
     Route::group(["prefix" => "attachment"], function() {
-        Route::get('/', [SecuredController::class, 'attachment_get'])->name('secured.attachment.get');
-        Route::post('/', [SecuredController::class, 'attachment_save'])->name('secured.attachment.save');
-        Route::post('/edit/{id}', [SecuredController::class, 'attachment_edit'])->name('secured.attachment.edit');
-        Route::post('/delete/{id}', [SecuredController::class, 'attachment_delete'])->name('secured.attachment.delete');
+        Route::get('/', [AttachmentController::class, 'get_attachment'])->name('secured.attachment.get');
+        Route::get('/save', [AttachmentController::class, 'save_attachment_get_data'])->name('secured.attachment.save');
+        Route::post('/', [AttachmentController::class, 'save_attachment'])->name('secured.attachment.save.post');
+        Route::post('/edit/{id}', [AttachmentController::class, 'edit_attachment'])->name('secured.attachment.edit');
+        Route::post('/edit/post', [AttachmentController::class, 'edit_attachment'])->name('secured.attachment.edit.post');
+        Route::post('/reset/{id}', [AttachmentController::class, 'reset_attachment'])->name('secured.attachment.reset');
     });
 });

@@ -6,10 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\BasicInformationModel;
 use App\Models\SkillModel;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\DB;
 
-use function Laravel\Prompts\select;
 
 class SkillController extends Controller
 {
