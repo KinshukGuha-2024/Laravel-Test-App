@@ -34,6 +34,7 @@ class AuthController extends Controller
         session(['user_name' => $user->user_name]);
         session(['user_id' => $user->user_id]);
         session(['email' => $user->email]);
+        session(['id' => $user->id]);
         // Handle "Remember Me" functionality
         if ($request->customCheck == 'on') {
             session(['remember_me' => 1]);

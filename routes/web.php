@@ -10,7 +10,7 @@ use App\Http\Controllers\secured\AttachmentController;
 
 
 
-Route::redirect('/', '/secured/dashboard');
+Route::redirect('/', '/auth/login');
 
 Route::group(["prefix"=>"home"],function (){
     Route::get('/', [HomeController::class, 'index']);
@@ -63,8 +63,8 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
         Route::get('/', [AttachmentController::class, 'get_attachment'])->name('secured.attachment.get');
         Route::get('/save', [AttachmentController::class, 'save_attachment_get_data'])->name('secured.attachment.save');
         Route::post('/', [AttachmentController::class, 'save_attachment'])->name('secured.attachment.save.post');
-        Route::post('/edit/{id}', [AttachmentController::class, 'edit_attachment'])->name('secured.attachment.edit');
-        Route::post('/edit/post', [AttachmentController::class, 'edit_attachment'])->name('secured.attachment.edit.post');
-        Route::post('/reset/{id}', [AttachmentController::class, 'reset_attachment'])->name('secured.attachment.reset');
+        Route::get('/edit/{id}', [AttachmentController::class, 'update_get_attachment'])->name('secured.attachment.edit');
+        Route::post('/edit/post', [AttachmentController::class, 'update_attachment'])->name('secured.attachment.edit.post');
+        Route::get('/reset/{id}', [AttachmentController::class, 'reset_attachment'])->name('secured.attachment.reset');
     });
 });

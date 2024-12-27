@@ -281,6 +281,11 @@
   .formbold-filename svg {
     cursor: pointer;
   }
+  .file-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   .formbold-btn {
     font-size: 16px;
