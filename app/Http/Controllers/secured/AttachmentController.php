@@ -70,6 +70,13 @@ class AttachmentController extends Controller
 
     // Get attachment Data During Update 
     public function update_get_attachment ($id) {
+        $get_attachment_uploads_data = Attachments::where('user_id', $id)
+                                        ->where('type', 'attachments')
+                                        ->get();
+        $get_attachment_resume_data = Attachments::where('user_id', $id)
+                                        ->where('type', 'resume')
+                                        ->first();
+        return view('pages.secured.dashboard.attachment.edit', compact('get_attachment_uploads_data','get_attachment_resume_data'));
         
     }
 
