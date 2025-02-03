@@ -13,10 +13,11 @@
     <script rel src="{{ asset('js/home/home.js') }}"></script>
 </head>
 <body>
+{{ $basic_info }}
     <div class="main-body">
 
         <div class="profile-image">
-            <img src="{{ asset('storage/images/assets/profileImage.jpg') }}" id="ProfileImage-img">
+            <img src="{{ asset('storage/uploads/' . $basic_info[0]['image_path']) }}" id="ProfileImage-img">
         </div>
 
         <div class="content-body">
@@ -26,11 +27,11 @@
                 
                 <!-- User-Name Section Start -->
                 <h1 id="user-name">
-                    {{ $basic_info['name'] }}
+                    {{ $basic_info[0]['name'] }}
                 </h1>
-                <h1 id="user-role">{{ $basic_info['role'] }}</h1>
+                <h1 id="user-role">{{ $basic_info[0]['role'] }}</h1>
                 <div class="second-image-section">
-                    <img src="{{ asset('storage/uploads/' . $basic_info['image_path']) }}" id="media-query-image">
+                    <img src="{{ asset('storage/uploads/' . $basic_info[0]['image_path']) }}" id="media-query-image">
                 </div>
                 <!-- User-Name Section END -->
 
@@ -54,7 +55,7 @@
                     <hr>
                 </div>
                 <div class="about-body">
-                    <p>{{ $basic_info['about'] }}</p>
+                    <p>{{ $basic_info[0]['about'] }}</p>
                 </div>
             </div>
             <!-- About Section End -->
@@ -289,17 +290,17 @@
                 <div class="contact-me-body">
                     <div class="location-section">
                         <img src="{{ asset('storage/images/assets/icons/placeholder.png') }}" style="height:30px;width:30px;margin-right:5px;">
-                        <p>{{ $basic_info['city'] }}, {{ $basic_info['state'] }}, {{ $basic_info['country'] }}</p>
+                        <p>{{ $basic_info[0]['city'] }}, {{ $basic_info[0]['state'] }}, {{ $basic_info[0]['country'] }}</p>
                     </div>
 
                     <div class="mobile-section">
                         <img src="{{ asset('storage/images/assets/icons/old-typical-phone.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Phone : +91 {{ $basic_info['mobile'] }}</p>
+                        <p>Phone : +91 {{ $basic_info[0]['mobile'] }}</p>
                     </div>
 
                     <div class="mail-section">
                         <img src="{{ asset('storage/images/assets/icons/gmail.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Email : {{ $basic_info['email'] }}</p>
+                        <p>Email : {{ $basic_info[0]['email'] }}</p>
                     </div>
 
                     <div class="image-section-contact-me">
@@ -328,16 +329,16 @@
             <div class="footer-section animation">
                 <div class="footer">
                     <div class="socialimages">
-                        @if($basic_info['facebook_id'] != null)
-                            <a href="{{ $basic_info['facebook_id'] }}"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($basic_info[0]['facebook_id'] != null)
+                            <a href="{{ $basic_info[0]['facebook_id'] }}"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
 
-                        @if($basic_info['github_id'] != null)
-                            <a href="{{ $basic_info['github_id'] }}"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($basic_info[0]['github_id'] != null)
+                            <a href="{{ $basic_info[0]['github_id'] }}"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
 
-                        @if($basic_info['linked_in_id'] != null)
-                            <a href="{{ $basic_info['linked_in_id'] }}"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($basic_info[0]['linked_in_id'] != null)
+                            <a href="{{ $basic_info[0]['linked_in_id'] }}"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
                     
                         </div>
