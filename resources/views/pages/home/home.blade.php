@@ -40,7 +40,7 @@
                         <img src="{{ asset('storage/images/assets/icons/download.png') }}" id="DownloadImage-img">
                     </div>
                     
-                    <button id="download-button" ><h1>Download Resume</h1></button>
+                    <button id="download-button" onclick="downloadResume({{ $return_data['attachment_info'] }})"><h1>Download Resume</h1></button>
                 </div>
                 <!-- Download Resume Section END -->
 
@@ -334,16 +334,37 @@
         document.querySelectorAll('.projects-worked-body li.project-item').forEach(item => {
             item.addEventListener('click', () => {
                 const details = item.querySelector('.project-details');
-
-                // Check if details are currently visible
                 if (details.style.display === 'block') {
-                    details.style.display = 'none'; // Hide details if they are already visible
-                    item.classList.remove('expanded'); // Remove expanded class
+                    details.style.display = 'none'; 
+                    item.classList.remove('expanded'); 
                 } else {
-                    details.style.display = 'block'; // Show details
-                    item.classList.add('expanded'); // Add expanded class
+                    details.style.display = 'block'; 
+                    item.classList.add('expanded'); 
                 }
             });
         });
     });
+
+    function downloadResume(info){
+        var url = window.location.origin + "/storage/uploads/attachments/"; 
+        var path = '';
+
+        info.forEach((item) => {
+            if (item.type == 'resume') {
+                path = item.attachment_path;
+            }
+        });
+
+        if (path) {
+            var fullPath = url + path;  
+            var link = document.createElement('a');
+            link.href = fullPath;
+            link.download = ''; 
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            console.log("Resume not found.");
+        }
+    }
 </script>

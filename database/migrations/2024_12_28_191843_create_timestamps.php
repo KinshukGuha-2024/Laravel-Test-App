@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('skill', function (Blueprint $table) {
-            $table->timestamps(); 
-        });
+        // Schema::table('skill', function (Blueprint $table) {
+        //     $table->timestamps(); 
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('skill', function (Blueprint $table) {
-            $table->dropTimestamps(); // Removes created_at and updated_at columns
-        });
+        // Schema::table('skill', function (Blueprint $table) {
+        //     $table->dropTimestamps(); // Removes created_at and updated_at columns
+        // });
     }
 };

@@ -27,7 +27,8 @@ class HomeController extends Controller
             "basic_info" => $basic_info,
             "skill_informattion" => $skill_info,
             "attachment_info" => $attachment_info
-        ];                                 
+        ];  
+        // echo json_encode( $return_data["attachment_info"] );die;                               
 
         return view('pages.home.home', compact('return_data'));
     } 
