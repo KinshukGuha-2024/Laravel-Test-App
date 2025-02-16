@@ -75,7 +75,7 @@
                                             </svg>
                                         </div>
                                         <div class="text">
-                                            <span>{{ $get_attachment_resume_data->attachment_path }}</span>
+                                            <span>{{ isset($get_attachment_resume_data->attachment_path) ? $get_attachment_resume_data->attachment_path : 'Click to upload Resume' }}</span>
                                         </div>
                                         <input type="file" id="file" name="resume" accept=".pdf" onchange="updateFileName()">
                                     </label>

@@ -16,7 +16,7 @@
     <div class="main-body">
 
         <div class="profile-image">
-            <img src="{{ asset('storage/images/assets/profileImage.jpg') }}" id="ProfileImage-img">
+            <img src="{{ asset('storage/uploads/' . $return_data['basic_info']['image_path']) }}" id="ProfileImage-img">
         </div>
 
         <div class="content-body">
@@ -26,11 +26,11 @@
                 
                 <!-- User-Name Section Start -->
                 <h1 id="user-name">
-                    {{ $basic_info['name'] }}
+                    {{ $return_data['basic_info']['name'] }}
                 </h1>
-                <h1 id="user-role">{{ $basic_info['role'] }}</h1>
+                <h1 id="user-role">{{ $return_data['basic_info']['role'] }}</h1>
                 <div class="second-image-section">
-                    <img src="{{ asset('storage/uploads/' . $basic_info['image_path']) }}" id="media-query-image">
+                    <img src="{{ asset('storage/uploads/' . $return_data['basic_info']['image_path']) }}" id="media-query-image">
                 </div>
                 <!-- User-Name Section END -->
 
@@ -54,7 +54,7 @@
                     <hr>
                 </div>
                 <div class="about-body">
-                    <p>{{ $basic_info['about'] }}</p>
+                    <p>{{ $return_data['basic_info']['about'] }}</p>
                 </div>
             </div>
             <!-- About Section End -->
@@ -66,17 +66,11 @@
                     <hr>
                 </div>
                 <div class="portfolio-pictures">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/homepage1.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/homepage2.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/invoice1.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/razorpay1.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/admin99.png') }}" style="cursor:pointer;" alt="">
-
-                    <img src="{{ asset('storage/images/assets/portfolio-images/5.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/8.png') }}" style="cursor:pointer;" alt="">
-                    <img src="{{ asset('storage/images/assets/portfolio-images/11.png') }}" style="cursor:pointer;" alt="">
-
-
+                    @foreach($return_data['attachment_info'] as $info)
+                        @if($info["type"] == "attachments")
+                            <img src="{{ asset('storage/uploads/attachments/' . $info['attachment_path']) }}" style="cursor:pointer;" alt="">
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <!-- Portfolio-Section End -->
@@ -97,32 +91,16 @@
                     <hr>
                 </div>
                 <div class="skill-body">
-                    <div class="skill-name">
-                        <p >PHP</p>
-                    </div>
-                    <div class="outer-bar">
-                        <div class="percentage-bar" style="width:50%">
-                            <p>50%</p>
+                    @foreach($return_data['skill_informattion'] as $info)
+                        <div class="skill-name">
+                            <p >{{ $info["skill_name"] }}</p>
                         </div>
-                    </div>
-
-                    <div class="skill-name">
-                        <p >MySQL</p>
-                    </div>
-                    <div class="outer-bar">
-                        <div class="percentage-bar" style="width:95%">
-                            <p>95%</p>
+                        <div class="outer-bar">
+                            <div class="percentage-bar" style="width: {{ $info['skill_percent'] }}%;">
+                                <p>{{ $info["skill_percent"] }}</p>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="skill-name">
-                        <p >Jquery</p>
-                    </div>
-                    <div class="outer-bar">
-                        <div class="percentage-bar" style="width:30%">
-                            <p>30%</p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
             <!-- My Skills-Section End -->
@@ -289,17 +267,17 @@
                 <div class="contact-me-body">
                     <div class="location-section">
                         <img src="{{ asset('storage/images/assets/icons/placeholder.png') }}" style="height:30px;width:30px;margin-right:5px;">
-                        <p>{{ $basic_info['city'] }}, {{ $basic_info['state'] }}, {{ $basic_info['country'] }}</p>
+                        <p>{{ $return_data['basic_info']['city'] }}, {{ $return_data['basic_info']['state'] }}, {{ $return_data['basic_info']['country'] }}</p>
                     </div>
 
                     <div class="mobile-section">
                         <img src="{{ asset('storage/images/assets/icons/old-typical-phone.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Phone : +91 {{ $basic_info['mobile'] }}</p>
+                        <p>Phone : +91 {{ $return_data['basic_info']['mobile'] }}</p>
                     </div>
 
                     <div class="mail-section">
                         <img src="{{ asset('storage/images/assets/icons/gmail.png') }}" style="height:30px;width:30px;margin:0px 10px 0px 5px;">
-                        <p>Email : {{ $basic_info['email'] }}</p>
+                        <p>Email : {{ $return_data['basic_info']['email'] }}</p>
                     </div>
 
                     <div class="image-section-contact-me">
@@ -328,16 +306,16 @@
             <div class="footer-section animation">
                 <div class="footer">
                     <div class="socialimages">
-                        @if($basic_info['facebook_id'] != null)
-                            <a href="{{ $basic_info['facebook_id'] }}"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($return_data['basic_info']['facebook_id'] != null)
+                            <a href="{{ $return_data['basic_info']['facebook_id'] }}"><img src="{{ asset('storage/images/assets/icons/facebook.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
 
-                        @if($basic_info['github_id'] != null)
-                            <a href="{{ $basic_info['github_id'] }}"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($return_data['basic_info']['github_id'] != null)
+                            <a href="{{ $return_data['basic_info']['github_id'] }}"><img src="{{ asset('storage/images/assets/icons/github-sign.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
 
-                        @if($basic_info['linked_in_id'] != null)
-                            <a href="{{ $basic_info['linked_in_id'] }}"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
+                        @if($return_data['basic_info']['linked_in_id'] != null)
+                            <a href="{{ $return_data['basic_info']['linked_in_id'] }}"><img src="{{ asset('storage/images/assets/icons/linkedin.png') }}" style="width:25px;height:25px;margin:5px;"></a>
                         @endif
                     
                         </div>
