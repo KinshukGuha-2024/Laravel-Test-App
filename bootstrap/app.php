@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\LoginMiddleware;
+use App\Http\Middleware\TrackLocation;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'AuthMiddleware' => AuthMiddleware::class,
+            'TrackLocation' => TrackLocation::class,
             'LoginMiddleware' => LoginMiddleware::class
 
         ]);

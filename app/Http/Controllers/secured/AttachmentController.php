@@ -15,8 +15,10 @@ class AttachmentController extends Controller
         $attachment_data = Attachments::selectRaw('COUNT(attachments.id) as attachment_count, basic_info_user.name, basic_info_user.id')
                                 ->rightJoin('basic_info_user', 'attachments.user_id', '=', 'basic_info_user.id')
                                 ->groupBy('basic_info_user.name', 'basic_info_user.id')
+                                ->having('attachment_count', '>', 1)
                                 ->orderBy('basic_info_user.active', 'desc')
                                 ->get();
+
         return view('pages.secured.dashboard.attachment.attachment', compact('attachment_data'));
        
     }

@@ -12,7 +12,7 @@ use App\Http\Controllers\secured\AttachmentController;
 
 Route::redirect('/', '/auth/login');
 
-Route::group(["prefix"=>"home"],function (){
+Route::group(["prefix"=>"home", "middleware" => 'TrackLocation'],function (){
     Route::get('/', [HomeController::class, 'index']);
 });
 

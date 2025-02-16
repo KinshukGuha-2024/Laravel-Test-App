@@ -16,6 +16,7 @@ class SkillController extends Controller
         $skill_data = SkillModel::selectRaw('COUNT(skill.id) as skill_count, basic_info_user.name, basic_info_user.id')
                                 ->rightJoin('basic_info_user', 'skill.user_id', '=', 'basic_info_user.id')
                                 ->groupBy('basic_info_user.name', 'basic_info_user.id')
+                                ->having('skill_count', '>', 1)
                                 ->orderBy('basic_info_user.active', 'desc')
                                 ->get();
 
