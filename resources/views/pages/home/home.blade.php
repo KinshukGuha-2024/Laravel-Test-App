@@ -353,6 +353,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+        
+
         document.querySelectorAll('.projects-worked-body li.project-item').forEach(item => {
             item.addEventListener('click', () => {
                 const details = item.querySelector('.project-details');
@@ -368,4 +370,6 @@
             });
         });
     });
+    document.cookie = "cookie-consent=true; path=/; expires=Thu, 31 Dec 2025 12:00:00 UTC; domain=localhost";
+
 </script>
