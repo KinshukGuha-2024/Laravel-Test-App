@@ -11,9 +11,4 @@ class SkillModel extends Model
     use HasFactory, Notifiable;
     protected $table = 'skill';
 
-    protected $fillable = [
-        'user_id',
-        'skill_name',
-        'skill_percent'
-    ];
 }

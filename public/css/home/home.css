@@ -135,7 +135,7 @@ button#download-button h1 {
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Change to flex-start for proper alignment */
-    align-items: center;
+    align-items: flex-start;
     height: 95vh; /* Set a fixed height to allow scrolling */
     flex:2;
     overflow-y: auto; /* Enable vertical scrolling */

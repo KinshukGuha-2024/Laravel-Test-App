@@ -353,8 +353,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        
-
         document.querySelectorAll('.projects-worked-body li.project-item').forEach(item => {
             item.addEventListener('click', () => {
                 const details = item.querySelector('.project-details');

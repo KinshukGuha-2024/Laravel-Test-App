@@ -110,7 +110,7 @@
 
                                                     @if( $data['github_id'] )
                                                         <li class="icon twitter">
-                                                            <a href="{{ $data['github_id'] }}">
+                                                            <a target="_blank" href="{{ $data['github_id'] }}">
                                                                 <span class="tooltip">GitHub</span>
                                                                 <svg
                                                                     height="1.8em"
@@ -130,7 +130,7 @@
 
                                                     @if( $data['linked_in_id'] )
                                                         <li class="icon instagram">
-                                                            <a href="{{ $data['linked_in_id'] }}">
+                                                            <a target="_blank" href="{{ $data['linked_in_id'] }}">
                                                                 <span class="tooltip">LinkedIn</span>
                                                                 <svg
                                                                     height="1.8em"
