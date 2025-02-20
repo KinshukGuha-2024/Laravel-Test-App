@@ -63,6 +63,19 @@
                             <p class="title">Add New Attachments </p>
                             
                             <form action="{{ route('secured.attachment.save.post') }}" method="POST" enctype="multipart/form-data">
+                                <label for="state" class="form-label">User</label>
+                                <div style="display:flex; justify-content:center; align-items:center;">
+                                    <select name="user_id" class="form-control" id="user_id">
+                                        <option value="">Select User</option>
+                                        @foreach($user_data as $data) 
+                                            <option value="{{ $data['id'] }}" {{ old('user_id') == $data['id'] ? 'selected' : '' }}>
+                                                {{ $data['name'] }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    
+                                </div>
+                                <div class="text-danger user-error" style="display: none;"><strong>User is required.</strong></div>
                                 <label for="state" class="form-label">Upload Resume</label>
                                 <div>
                                     <label class="custum-file-upload" for="file">

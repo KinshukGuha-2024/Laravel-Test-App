@@ -511,11 +511,15 @@ button#download-button h1 {
 }
 
 .portfolio-pictures img {
+    opacity: 0;
     max-width: calc(50% - 10px); /* Two images in a row with gap adjustment */
     height: auto; /* Maintain aspect ratio */
     object-fit: cover; /* Cover the container without distortion */
     border-radius: 8px; /* Optional: Add rounded corners */
     border:0.5px #f1f1f1;
+}
+.portfolio-pictures img.loaded {
+    opacity: 1;
 }
 
 /* Optional: Adjust for smaller screens */
@@ -777,8 +781,8 @@ button#download-button h1 {
 }
 
 /* Applying animations */
-.slide-left { animation: slide-left 0.8s forwards; }
-.slide-right { animation: slide-right 0.8s forwards; }
+/* .slide-left { animation: slide-left 0.8s forwards; } */
+/* .slide-right { animation: slide-right 0.8s forwards; } */
 
 .zoom-in { animation: zoom-in 0.8s forwards; }
 .rotate-in { animation: rotate-in 0.8s forwards; }

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function index() {
-        $skill_info = BasicInformationModel::select('s.skill_name', 's.skill_percent')  // Selecting specific columns
+        $skill_information = BasicInformationModel::select('s.skill_name', 's.skill_percent')  // Selecting specific columns
                                             ->leftJoin('skill as s', 'basic_info_user.id', '=', 's.user_id')
                                             ->where('basic_info_user.active', 'Active')  // Adding table name to avoid ambiguity
                                             ->get();
@@ -23,13 +23,8 @@ class HomeController extends Controller
                                             ->leftJoin('attachments as a', 'basic_info_user.id', '=', 'a.user_id')
                                             ->where('basic_info_user.active', 'Active')  // Adding table name to avoid ambiguity
                                             ->get();
-        $return_data = [
-            "basic_info" => $basic_info,
-            "skill_informattion" => $skill_info,
-            "attachment_info" => $attachment_info
-        ];  
-        // echo json_encode( $return_data["attachment_info"] );die;                               
+        // echo json_encode( $attachment_info );die;                               
 
-        return view('pages.home.home', compact('return_data'));
+        return view('pages.home.home', compact('basic_info', 'skill_information', 'attachment_info'));
     } 
 }

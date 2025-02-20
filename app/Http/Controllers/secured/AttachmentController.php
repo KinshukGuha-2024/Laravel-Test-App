@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Attachments;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\BasicInformationModel;
 
 
 class AttachmentController extends Controller
@@ -24,8 +25,8 @@ class AttachmentController extends Controller
     }
 
     public function save_attachment_get_data () {
-        return view('pages.secured.dashboard.attachment.add');
-        
+        $user_data = BasicInformationModel::all();
+        return view('pages.secured.dashboard.attachment.add', compact('user_data'));
     }
     
     // Save attachment Data
@@ -50,7 +51,7 @@ class AttachmentController extends Controller
         $saveArr = [];
         foreach($multiImageArr as $image) {
             $saveArr[]= [
-                "user_id" => session('id'),
+                "user_id" => $request->user_id,
                 "attachment_path" => $image,
                 "type" => "attachments",
                 "created_at" => Carbon::now(),
@@ -58,7 +59,7 @@ class AttachmentController extends Controller
             ];
         }
         $saveArr[] = [
-            "user_id" => session('id'),
+            "user_id" => $request->user_id,
             "attachment_path" => $resumeName,
             "type" => "resume",
             "created_at" => Carbon::now(),
