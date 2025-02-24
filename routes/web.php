@@ -13,7 +13,9 @@ use App\Http\Controllers\secured\AttachmentController;
 Route::redirect('/', '/auth/login');
 
 Route::group(["prefix"=>"home", "middleware" => 'TrackLocation'],function (){
-    Route::get('/', [HomeController::class, 'index']);
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/success', [HomeController::class, 'success']);
+    Route::post('/send-mail', [HomeController::class, 'send_mail'])->name('home.send_mail');
 });
 
 

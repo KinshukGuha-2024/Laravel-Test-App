@@ -5,7 +5,9 @@ namespace App\Http\Controllers\home;
 use App\Http\Controllers\Controller;
 use App\Models\BasicInformationModel;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomMail;
+use App\Mail\UserConfirmationMail;
 
 class HomeController extends Controller
 {
@@ -22,9 +24,29 @@ class HomeController extends Controller
         $attachment_info = BasicInformationModel::select('a.type', 'a.attachment_path')  // Selecting specific columns
                                             ->leftJoin('attachments as a', 'basic_info_user.id', '=', 'a.user_id')
                                             ->where('basic_info_user.active', 'Active')  // Adding table name to avoid ambiguity
-                                            ->get();
-        // echo json_encode( $attachment_info );die;                               
+                                            ->get();                             
 
         return view('pages.home.home', compact('basic_info', 'skill_information', 'attachment_info'));
     } 
+
+    public function success(){
+        return view('pages.success.sendMail');
+    }
+
+    public function send_mail(Request $request){
+        $details = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ];
+
+        try{
+            Mail::to($details['email'])->send(new CustomMail($details));
+            Mail::to($details['email'])->send(new UserConfirmationMail($details));
+            return view('pages.success.sendMail');
+        }catch(\Exception $e) {
+            return response()->json(['message' => $e->getMessage()]);
+        }
+    }
 }

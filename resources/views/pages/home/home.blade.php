@@ -190,11 +190,12 @@
                         <div class="contact-me-form-section">
                             <h3>Lets get in touch. Send me a message:</h3>
                             <div class="form-section">
-                                <form class="contact-me-form" action="">
-                                    <input type="text" placeholder="Name">
-                                    <input type="text" placeholder="Email">
-                                    <input type="text" placeholder="Subject">
-                                    <textarea name="" id="" style="height: 80px;min-width:90%;max-width:100%;" placeholder="Message"></textarea>
+                                <form class="contact-me-form" method="POST" action="{{ route('home.send_mail') }}">
+                                    @csrf
+                                    <input type="text" name="name" placeholder="Name">
+                                    <input type="text" name="email" placeholder="Email">
+                                    <input type="text" name="subject" placeholder="Subject">
+                                    <textarea name="message" id="" style="height: 80px;min-width:90%;max-width:100%;" placeholder="Message"></textarea>
                                     <button id="send-message-button"><img src="{{ asset('storage/images/assets/icons/send.png') }}" style="width:30px;height:30px;margin-right:10px;">Send Message</button>
                                 </form>
                             </div>
