@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use App\Models\UserMails;
 
 
 
@@ -17,22 +18,17 @@ class SecuredController extends Controller
         return view('pages.secured.dashboard.dashboard', compact('session_data'));
     }
 
-    // ATTACHMENT FUNCTIONS
-    public function attachment_get() {
+   public function getAllEmails() {
+        $mails_data = UserMails::get();
+        return view('pages.secured.dashboard.user_mails.index', compact('mails_data'));
+   }
 
-    }
-
-    public function attachment_edit(Request $request) {
-
-    }
-    
-    public function attachment_update($id) {
-
-    }
-
-    public function attachment_delete($id) {
-
-    }
+   public function saveNotificationDownload() {
+        // Notifications::create([
+        //     "type" => "new_mail"
+        // ]);
+        return response()->json("hello");
+   }
 
    
 }

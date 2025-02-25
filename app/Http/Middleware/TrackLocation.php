@@ -6,6 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\AccessInformation;
+use App\Models\Notifications;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
@@ -72,6 +74,10 @@ class TrackLocation
                 'referrer_url' => $request->headers->get('referer'),
                 'visited_at' => now(),
             ]);
+            Notifications::create([
+                "type" => "new_user"
+            ]);
+            
         }
         return $next($request);
     }

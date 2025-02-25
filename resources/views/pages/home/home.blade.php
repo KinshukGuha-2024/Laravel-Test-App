@@ -12,6 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Latest jQuery version -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
     <script rel src="{{ asset('js/home/home.js') }}"></script>
 </head>
@@ -304,12 +307,24 @@
             const fileUrl = baseUrl + '/storage/uploads/attachments/' + path;
 
             // Create a hidden link and trigger download
-            const a = document.createElement('a');
-            a.href = fileUrl;
-            a.download = path.split('/').pop(); // Extracts the file name from the path
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+            // const a = document.createElement('a');
+            // a.href = fileUrl;
+            // a.download = path.split('/').pop(); // Extracts the file name from the path
+            // document.body.appendChild(a);
+            // a.click();
+            // document.body.removeChild(a);
+
+            $.ajax({
+                url: baseUrl + '/secured/notification-download-resume', 
+                type: 'GET', 
+                dataType: 'json', 
+                success: function(response) {
+                    console.log('Success:', response); 
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error:', error); 
+                }
+            });
         }
     }
 

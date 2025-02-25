@@ -76,7 +76,7 @@
             <p><strong>Note:</strong> This is an automated email—please do not reply to this message.</p>
         </div>
         <div class="footer">
-            <p>&copy; 2025 Your Company Name. All rights reserved.</p>
+            <p>&copy; 2025 Kinshuk Guha. All rights reserved.</p>
         </div>
     </div>
 </body>

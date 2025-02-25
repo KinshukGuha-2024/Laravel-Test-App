@@ -69,4 +69,11 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
         Route::post('/edit/post', [AttachmentController::class, 'update_attachment'])->name('secured.attachment.edit.post');
         Route::get('/reset/{id}', [AttachmentController::class, 'reset_attachment'])->name('secured.attachment.reset');
     });
+
+    // Other Pages
+    Route::get('/all-mails', [SecuredController:: class, 'getAllEmails'])->name('secured.mails');
+    Route::get('/all-mails', [SecuredController:: class, 'AllUserVisits'])->name('secured.user_visits');
+    Route::get('/notification-download-resume', [SecuredController:: class, 'saveNotificationDownload']);
+
+
 });

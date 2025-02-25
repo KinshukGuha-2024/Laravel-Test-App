@@ -48,7 +48,7 @@
                 <a class="collapse-item" href="{{ route('secured.attachment.get') }}">Attachments</a>
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
-                <a class="collapse-item" href="404.html">Recieved Mails</a>
+                <a class="collapse-item" href="{{ route('secured.mails') }}">Recieved Mails</a>
             </div>
         </div>
     </li>

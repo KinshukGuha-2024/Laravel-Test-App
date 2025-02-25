@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_visits', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('ip_address');
-            $table->text('user_agent');
-            $table->string('referrer_url')->nullable();
-            $table->string('session_id')->nullable();
-            $table->timestamp('visit_timestamp')->useCurrent();
-            $table->text('geo_location')->nullable(); 
+            $table->string('is_seen')->default('0');
+            $table->string('type');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_visits');
+        Schema::dropIfExists('notifications');
     }
 };

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\home;
 
 use App\Http\Controllers\Controller;
 use App\Models\BasicInformationModel;
+use App\Models\UserMails;
+use App\Models\Notifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CustomMail;
@@ -42,6 +44,15 @@ class HomeController extends Controller
         ];
 
         try{
+            UserMails::create([
+                "name" => $request->name,
+                "email" => $request->email,
+                "subject" => $request->subject,
+                "message" => $request->message
+            ]);
+            Notifications::create([
+                "type" => "new_mail"
+            ]);
             Mail::to($details['email'])->send(new CustomMail($details));
             Mail::to($details['email'])->send(new UserConfirmationMail($details));
             return view('pages.success.sendMail');
