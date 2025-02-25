@@ -44,14 +44,15 @@ class HomeController extends Controller
         ];
 
         try{
-            UserMails::create([
-                "name" => $request->name,
-                "email" => $request->email,
-                "subject" => $request->subject,
-                "message" => $request->message
-            ]);
+            $userMail = UserMails::create([
+                            "name" => $request->name,
+                            "email" => $request->email,
+                            "subject" => $request->subject,
+                            "message" => $request->message
+                        ]);
             Notifications::create([
-                "type" => "new_mail"
+                "type" => "new_mail",
+                "type_id" => $userMail->id
             ]);
             Mail::to($details['email'])->send(new CustomMail($details));
             Mail::to($details['email'])->send(new UserConfirmationMail($details));

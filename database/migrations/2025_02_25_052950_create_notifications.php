@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('is_seen')->default('0');
+            $table->bigInteger('type_id');
             $table->string('type');
             $table->timestamps();
         });

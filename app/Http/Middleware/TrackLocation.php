@@ -11,6 +11,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Jenssegers\Agent\Agent;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Facades\Session;
 
 class TrackLocation
 {
@@ -35,7 +36,8 @@ class TrackLocation
         }
         $existingRecord = AccessInformation::where('ip_address', $ipAddress)
                                             ->whereDate('created_at', $currentDate)
-                                            ->exists();
+                                            ->orderBy('id', 'DESC')
+                                            ->first();
         $position = Location::get($ipAddress);
         if ($position) {
             $latitude = $position->latitude;  
@@ -56,28 +58,32 @@ class TrackLocation
         }
 
         if (!$existingRecord) {
-            AccessInformation::create([
-                'ip_address' => $request->ip(),
-                'user_agent' => $request->userAgent(),
-                'device_type' => $agent->device(),
-                'browser' => $agent->browser(),
-                'os' => $agent->platform(),
-                'ip_address' => $ipAddress,
-                'country' => $country,
-                'city' => $city,
-                'latitude' => $latitude,
-                'longitude' => $longitude,
-                'zipcode' => $zipcode,
-                'timezone' => $timezone,
-                'state' => $state,
-                'visited_url' => $request->fullUrl(),
-                'referrer_url' => $request->headers->get('referer'),
-                'visited_at' => now(),
-            ]);
+            $access_info = AccessInformation::create([
+                                'ip_address' => $request->ip(),
+                                'user_agent' => $request->userAgent(),
+                                'device_type' => $agent->device(),
+                                'browser' => $agent->browser(),
+                                'os' => $agent->platform(),
+                                'ip_address' => $ipAddress,
+                                'country' => $country,
+                                'city' => $city,
+                                'latitude' => $latitude,
+                                'longitude' => $longitude,
+                                'zipcode' => $zipcode,
+                                'timezone' => $timezone,
+                                'state' => $state,
+                                'visited_url' => $request->fullUrl(),
+                                'referrer_url' => $request->headers->get('referer'),
+                                'visited_at' => now(),
+                            ]);
+            session(['user_login_id' => $access_info->id]);
             Notifications::create([
-                "type" => "new_user"
+                "type" => "new_user",
+                "type_id" => $access_info->id
             ]);
             
+        } else {
+            session(['user_login_id' => $existingRecord->id]);
         }
         return $next($request);
     }

@@ -72,8 +72,10 @@ Route::group(["prefix" => "/secured", "middleware" => 'AuthMiddleware'], functio
 
     // Other Pages
     Route::get('/all-mails', [SecuredController:: class, 'getAllEmails'])->name('secured.mails');
-    Route::get('/all-mails', [SecuredController:: class, 'AllUserVisits'])->name('secured.user_visits');
+    Route::get('/all-user-visits', [SecuredController:: class, 'AllUserVisits'])->name('secured.user_visits');
+    Route::post('/notification-readed', [SecuredController:: class, 'readNotification'])->name('secured.read.notification');
     Route::get('/notification-download-resume', [SecuredController:: class, 'saveNotificationDownload']);
+    
 
 
 });

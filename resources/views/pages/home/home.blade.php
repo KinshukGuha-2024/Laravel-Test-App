@@ -307,12 +307,12 @@
             const fileUrl = baseUrl + '/storage/uploads/attachments/' + path;
 
             // Create a hidden link and trigger download
-            // const a = document.createElement('a');
-            // a.href = fileUrl;
-            // a.download = path.split('/').pop(); // Extracts the file name from the path
-            // document.body.appendChild(a);
-            // a.click();
-            // document.body.removeChild(a);
+            const a = document.createElement('a');
+            a.href = fileUrl;
+            a.download = path.split('/').pop(); 
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
 
             $.ajax({
                 url: baseUrl + '/secured/notification-download-resume', 
