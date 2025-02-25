@@ -9,7 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <style>
+        #map { height: 500px; width: 100%; }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <title>{{ config('app.name') }} | All Mails</title>
 
     <!-- Custom fonts for this template-->
@@ -49,34 +53,36 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">All Mails</h1>
+                        <h1 class="h3 mb-0 text-gray-800">All Users</h1>
                     </div>
 
                     <div class="all-mails">
                         <!-- Unread Mails -->
-                        @if(count($unread_mails) > 0)
-                            <label style="color: #b35e49; font-weight: bold;" for="">Unread Mails</label>
+                        @if(count($unread_users) > 0)
+                            <label style="color: #b35e49; font-weight: bold;" for="">Recent Visits</label>
                             <div style="height: auto; overflow: auto; padding-bottom:50px;">
                                 <table class="table" style="overflow: hidden; width: 100%; ">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Recieved</th>
+                                            <th scope="col">Device Information</th>
+                                            <th scope="col">Address</th>
+                                            <th scope="col">Time Zone</th>
+                                            <th scope="col">Visited</th>
                                             <th scope="col">Operation</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($unread_mails as $key => $mail)
+                                        @foreach($unread_users as $key => $user)
                                             <tr>
                                                 <th scope="row">{{$key + 1 }}</th>
-                                                <td style="font-weight: bold;">{{ $mail->name }}</td>
-                                                <td style="font-weight: bold; color:#4976b3;">{{ $mail->email }}</td>
-                                                <td style="font-weight: bold; color:#7ab96b; ">{{ $mail->time_ago != 'now' ? $mail->time_ago. " ago" : $mail->time_ago }}</td>
+                                                <td style="font-weight: bold;">{{ $user->device_type . ' ,' . $user->browser . ' ,' . $user->os}}</td>
+                                                <td style="font-weight: bold; color:#4976b3;">{{ $user->city . ' ,' . $user->state . ' - ' . $user->zipcode . ' ,' . $user->country}}</td>
+                                                <td style="font-weight: bold; color:#b38649; ">{{ $user->timezone }}</td>
+                                                <td style="font-weight: bold; color:#7ab96b; ">{{ $user->time_ago != 'now' ? $user->time_ago. " ago" : $user->time_ago }}</td>
                                                 <td>
-                                                    <img onclick="viewFullMail('{{ addslashes($mail->name) }}', '{{ addslashes($mail->email) }}', '{{ addslashes($mail->time_ago) }}', '{{ addslashes($mail->subject) }}', '{{ addslashes($mail->message) }}', '{{ addslashes($mail->id) }}')" style="width: 25px;height: 25px; cursor:pointer;" title="View Mail" src="{{ asset('storage/images/assets/icons/eye.png') }}" alt="">
-                                                    <img onclick="markAsRead('{{ $mail->id }}')" style="width: 25px;height: 25px; cursor:pointer;margin-left:6px;" title="Mark As Read" src="{{ asset('storage/images/assets/icons/check.png') }}">
+                                                    <img onclick="viewUser(('{{ $user }}'))" style="width: 25px;height: 25px; cursor:pointer;" title="View User" src="{{ asset('storage/images/assets/icons/eye.png') }}" alt="">
+                                                    <img style="width: 25px;height: 25px; cursor:pointer;margin-left:6px;" title="Mark As Read" src="{{ asset('storage/images/assets/icons/check.png') }}">
                                                 </td>        
                                             </tr>
                                         @endforeach
@@ -85,36 +91,6 @@
                             </div>
                         @endif
 
-                        <!-- Already Read Mails -->
-                        @if(count($all_mails) > 0)
-                            <label style="color: #49b34c; font-weight: bold;" for="">Already Readed Mails</label>
-                            <div style="height: auto; overflow: auto;">
-                                <table class="table" style="overflow: hidden; width: 100%;">
-                                    <thead class="thead-light">
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Email</th>
-                                            <th scope="col">Recieved</th>
-                                            <th scope="col">Operation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($all_mails as $key => $mail)
-                                            <tr>
-                                                <th scope="row">{{$key + 1 }}</th>
-                                                <td style="font-weight: bold;">{{ $mail->name }}</td>
-                                                <td style="font-weight: bold; color:#4976b3;">{{ $mail->email }}</td>
-                                                <td style="font-weight: bold; color:#7ab96b; ">{{ $mail->time_ago != 'now' ? $mail->time_ago. " ago" : $mail->time_ago }}</td>
-                                                <td>
-                                                    <img onclick="viewFullMail('{{ addslashes($mail->name) }}', '{{ addslashes($mail->email) }}', '{{ addslashes($mail->time_ago) }}', '{{ addslashes($mail->subject) }}', '{{ addslashes($mail->message) }}', '{{ addslashes($mail->id) }}')" style="width: 25px;height: 25px; cursor:pointer;" title="View Mail" src="{{ asset('storage/images/assets/icons/eye.png') }}" alt="">
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table> 
-                            </div>
-                        @endif
                     </div>
                 </div>
                 <!-- /.container-fluid -->
@@ -138,26 +114,16 @@
         <i class="fas fa-angle-up"></i>
     </a>
     <script>
-        function viewFullMail(name, email, timeAgo, subject, message, id) {
-            // Set modal title with sender's name
-            document.getElementById('emailModalLabel').innerHTML = `Received From - ${name}`;
+        document.addEventListener("DOMContentLoaded", function () {
+            initMap();
+        });
+        initMap();
 
-            // Set time ago label
-            let formattedTime = timeAgo !== 'now' ? timeAgo + " ago" : timeAgo;
-            document.getElementById('timeAgoLabel').innerText = formattedTime;
-
-            // Set recipient email
-            document.getElementById('recipient-email').innerText = email;
-
-            // Set subject field
-            document.getElementById('recipient-subject').value = subject;
-
-            // Set message field
-            document.getElementById('message-text').value = message;
+        function viewUser(user) {
+            
 
             // Show the modal
-            $('#emailModal').modal('show');
-            markAsRead(id, 'view');
+            $('#userInfoModal').modal('show');
         }
 
         function markAsRead(id ,from = null) {
@@ -187,6 +153,40 @@
                 error: function(xhr, status, error) {
                     console.error('Error:', error); 
                 }
+            });
+        }
+    </script>
+    <script>
+        var lat = 40.7128;  // Change this to your latitude
+        var lng = -74.0060; // Change this to your longitude
+
+        async function initMap() {
+            // Request needed libraries.
+            const { Map } = await google.maps.importLibrary("maps");
+            const myLatlng = { lat: lat, lng: lng };
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 4,
+                center: myLatlng,
+            });
+            // Create the initial InfoWindow.
+            let infoWindow = new google.maps.InfoWindow({
+                content: "Click the map to get Lat/Lng!",
+                position: myLatlng,
+            });
+
+            infoWindow.open(map);
+            // Configure the click listener.
+            map.addListener("click", (mapsMouseEvent) => {
+                // Close the current InfoWindow.
+                infoWindow.close();
+                // Create a new InfoWindow.
+                infoWindow = new google.maps.InfoWindow({
+                position: mapsMouseEvent.latLng,
+                });
+                infoWindow.setContent(
+                JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+                );
+                infoWindow.open(map);
             });
         }
     </script>

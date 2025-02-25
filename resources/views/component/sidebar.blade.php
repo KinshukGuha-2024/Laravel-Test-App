@@ -49,6 +49,7 @@
                 <div class="collapse-divider"></div>
                 <h6 class="collapse-header">Other Pages:</h6>
                 <a class="collapse-item" href="{{ route('secured.mails') }}">Recieved Mails</a>
+                <a class="collapse-item" href="{{ route('secured.users') }}">Accessed Users</a>
             </div>
         </div>
     </li>

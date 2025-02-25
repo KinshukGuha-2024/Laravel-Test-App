@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserMails;
+use App\Models\AccessInformation;
 use App\Models\Notifications;
 use Illuminate\Notifications\Notification;
 
@@ -37,6 +38,27 @@ class SecuredController extends Controller
           // echo json_encode($unread_mails);die;
         return view('pages.secured.dashboard.user_mails.index', compact('unread_mails','all_mails'));
    }
+
+   public function getAllUsers() {
+     $unread_users = Notifications::select('access_informations.*')
+                              ->leftJoin('access_informations', 'access_informations.id', '=', 'notifications.type_id')
+                              ->where('notifications.is_seen', 0)
+                              ->where('notifications.type', 'new_user')
+                              ->orderBy('notifications.created_at','DESC');
+     $unread_users_id = $unread_users->pluck('id');
+     $unread_users = $unread_users->get();
+     foreach($unread_users as $mail){
+          $mail->time_ago = $this->timeAgo($mail->created_at);
+     }
+     $all_users = AccessInformation::whereNotIn('id', $unread_users_id)->get();
+
+     foreach($all_users as $mail){
+          $mail->time_ago = $this->timeAgo($mail->created_at);
+     }
+
+     // echo json_encode($all_mails);die;
+   return view('pages.secured.dashboard.user_access.index', compact('unread_users','all_users'));
+}
 
    public function saveNotificationDownload() {
         Notifications::create([

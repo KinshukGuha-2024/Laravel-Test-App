@@ -61,6 +61,51 @@
   </div>
 </div>
 
+
+
+<div class="modal fade" id="userInfoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">User Visited</h4>
+        <label id="timeAgoLabel" style="font-size: 12px; padding-top:13px; padding-left:5px; font-weight:bold; color:#49b34c;"> 12m ago</label>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="user-system" class="col-form-label">User System:</label>
+            <label id="user-system" style="font-weight: bold; color:#4976b3;"> WebKit, Chrome(Windows)</label>
+          </div>
+          <div class="form-group">
+            <label for="user-address" class="col-form-label">User Address:</label>
+            <label id="user-address" style="font-weight: bold; color:#4976b3;"> Kolkata, West Bengal - 700072 (India)</label>
+          </div>
+          <div id="map"></div>
+          <div class="form-group">
+            <label for="recipient-subject" class="col-form-label">Subject:</label>
+            <input type="text" class="form-control" readonly id="recipient-subject">
+          </div>
+          <div class="form-group">
+            <label for="message-text"  class="col-form-label">Message:</label>
+            <textarea class="form-control" style="height: 250px;" readonly id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 <script>
     function removeLocalStorageData() {
         localStorage.removeItem('user_valid');
